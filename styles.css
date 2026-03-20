@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #1a2cff;
+  --dark: #0f172a;
+  --gray: #6b7280;
+
+  --container-max: 1240px;
+  /* Default (>=1440px & 1600px) */
+  --padding-x: 100px;
+  --padding-y: 100px;
+}
+
+/* ================= GLOBAL LAYOUT ================= */
+body {
+  font-family: "Inter", Arial, sans-serif;
+}
+
+.section {
+  padding: var(--padding-y) var(--padding-x);
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  width: 100%;
+}
+
+
+/* ================= HEADER ================= */
+.header {
+}
+
+/* ================= HERO ================= */
+.hero {
+}
+.hero-image {
+}
+.hero-content {
+}
+
+/* ================= SPECS ================= */
+.specs {
+}
+
+/* ================= FEATURES ================= */
+.features {
+}
+
+/* ================= FAQ ================= */
+.faq {
+}
+
+/* ================= CAROUSEL ================= */
+.applications {
+}
+
+/* ================= FOOTER ================= */
+.footer {
+}
+/* ================= RESPONSIVE ================= */
+
+/* <=1200px */
+@media (max-width: 1200px) {
+  :root {
+    --padding-x: 80px;
+    --padding-y: 80px;
+  }
+}
+
+/* <=1080px */
+@media (max-width: 1080px) {
+  :root {
+    --padding-x: 60px;
+    --padding-y: 80px;
+  }
+}
+
+/* <=800px */
+@media (max-width: 800px) {
+  :root {
+    --padding-x: 48px;
+    --padding-y: 80px;
+  }
+}
+
+/* <=360px */
+@media (max-width: 360px) {
+  :root {
+    --padding-x: 16px;
+    --padding-y: 48px;
+  }
+}
