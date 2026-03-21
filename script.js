@@ -174,6 +174,56 @@ function initCarousel() {
 // ================= IMAGE ZOOM =================
 function handleImageZoom() {}
 
+// ================= PROCESS STEPS =================
+function initProcessSteps() {
+  const processPanel = document.querySelector(".process-panel");
+  if (!processPanel) return;
+
+  const stepButtons = Array.from(processPanel.querySelectorAll(".process-step"));
+  const stepLabel = processPanel.querySelector(".process-mobile-step-label");
+  const prevButton = processPanel.querySelector(".process-mobile-prev");
+  const nextButton = processPanel.querySelector(".process-mobile-next");
+
+  if (!stepButtons.length || !stepLabel || !prevButton || !nextButton) return;
+
+  let currentIndex = Math.max(
+    0,
+    stepButtons.findIndex((button) => button.classList.contains("is-active"))
+  );
+
+  const totalSteps = stepButtons.length;
+
+  const updateStepState = () => {
+    stepButtons.forEach((button, index) => {
+      const isActive = index === currentIndex;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-selected", String(isActive));
+    });
+
+    const stepName = stepButtons[currentIndex].textContent.trim();
+    stepLabel.textContent = `Step ${currentIndex + 1}/${totalSteps}: ${stepName}`;
+  };
+
+  stepButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      currentIndex = index;
+      updateStepState();
+    });
+  });
+
+  prevButton.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + totalSteps) % totalSteps;
+    updateStepState();
+  });
+
+  nextButton.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % totalSteps;
+    updateStepState();
+  });
+
+  updateStepState();
+}
+
 // ================= FAQ TOGGLE =================
 function handleFAQ() {
   const faqItems = document.querySelectorAll(".faq-item");
@@ -214,5 +264,6 @@ document.addEventListener("DOMContentLoaded", () => {
   handleStickyHeader();
   initCarousel();
   handleImageZoom();
+  initProcessSteps();
   handleFAQ();
 });

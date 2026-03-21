@@ -645,7 +645,6 @@
             <div
               class="process-steps"
               role="tablist"
-              aria-label="Manufacturing process steps"
             >
               <button
                 class="process-step is-active body-14-med"
@@ -715,6 +714,9 @@
 
             <div class="process-body">
               <div class="process-text">
+                <div class="process-mobile-header">
+                  <span class="process-mobile-step-label body-14-med">Step 1/8: Raw Material</span>
+                </div>
                 <h3>High-Grade Raw Material Selection</h3>
                 <p class="body-18-reg">
                   Vacuum sizing tanks ensure precise outer diameter while
@@ -744,16 +746,27 @@
                   class="process-media-nav process-media-prev"
                   aria-label="Previous process image"
                 >
-                  <img src="assets/icons/arrow-right.svg" alt="" />
+                  <img src="assets/icons/arrow-right.svg" alt="Previous" />
                 </button>
                 <button
                   type="button"
                   class="process-media-nav process-media-next"
                   aria-label="Next process image"
                 >
-                  <img src="assets/icons/arrow-right.svg" alt="" />
+                  <img src="assets/icons/arrow-right.svg" alt="Next" />
                 </button>
               </div>
+            </div>
+
+            <div class="process-mobile-nav" aria-label="Process step navigation">
+              <button type="button" class="process-mobile-btn process-mobile-prev body-14-med">
+                <img src="assets/icons/arrow-right.svg" alt="" />
+                Previous
+              </button>
+              <button type="button" class="process-mobile-btn process-mobile-next body-14-med">
+                Next
+                <img src="assets/icons/arrow-right.svg" alt="" />
+              </button>
             </div>
           </div>
         </div>
