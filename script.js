@@ -82,7 +82,39 @@ function initCarousel() {}
 function handleImageZoom() {}
 
 // ================= FAQ TOGGLE =================
-function handleFAQ() {}
+function handleFAQ() {
+  const faqItems = document.querySelectorAll(".faq-item");
+  
+  faqItems.forEach((item) => {
+    const header = item.querySelector(".faq-header");
+    const toggle = item.querySelector(".faq-toggle");
+    
+    if (!header || !toggle) return;
+
+    const handleToggle = () => {
+      const isExpanded = item.classList.contains("faq-item-expanded");
+      
+      // Close all other items
+      faqItems.forEach((otherItem) => {
+        if (otherItem !== item && otherItem.classList.contains("faq-item-expanded")) {
+          otherItem.classList.remove("faq-item-expanded");
+          const btn = otherItem.querySelector(".faq-toggle");
+          if (btn) btn.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      // Toggle current item
+      item.classList.toggle("faq-item-expanded");
+      toggle.setAttribute("aria-expanded", !isExpanded);
+    };
+
+    header.addEventListener("click", handleToggle);
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      handleToggle();
+    });
+  });
+}
 
 // ================= INIT =================
 document.addEventListener("DOMContentLoaded", () => {
