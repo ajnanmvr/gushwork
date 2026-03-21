@@ -600,11 +600,11 @@ body.has-sticky-strip .sticky-product-bar {
 /* ================= SPECS ================= */
 .specs {
   background: var(--Colors-Secondary-500-main, #111827);
+  padding: var(--padding-y) var(--padding-x);
 }
 .specs .container {
   background-color: transparent;
   display: flex;
-  padding: var(--Spacing-100, 100px);
   flex-direction: column;
   align-items: center;
   gap: 56px;
@@ -627,15 +627,63 @@ body.has-sticky-strip .sticky-product-bar {
   align-self: stretch;
   color: var(--Colors-Neutral-Alpha-80-white, rgba(255, 255, 255, 0.8));
 }
-.spec .table {
+.specs .table {
   display: flex;
   max-width: 1240px;
   align-items: flex-start;
   align-self: stretch;
   border-radius: 16px;
   border: 1.25px solid var(--gray-700, #374151);
-  background: var(--white, #fff);
+  background: #1f2937;
+  overflow: hidden;
   box-shadow: 0 2px 4px 0 rgba(27, 28, 29, 0.04);
+}
+
+.specs .specs-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.specs .specs-data-table th,
+.specs .specs-data-table td {
+  text-align: left;
+  color: #fff;
+}
+
+.specs .specs-data-table th {
+  background: var(--gray-700, #374151);
+  align-items: center;
+  padding: 12px 24px;
+}
+
+.specs .specs-data-table td {
+  background: #1f2937;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 24px; /* 150% */
+}
+
+.specs .specs-data-table tbody td {
+  border-top: 1px solid #374151;
+}
+
+.specs .specs-data-table td:first-child {
+  font-weight: 500;
+}
+
+.specs .specs-data-table td:last-child {
+  font-weight: 400;
+}
+
+.specs .specs-data-table th + th,
+.specs .specs-data-table td + td {
+  border-left: 1px solid #374151;
+}
+
+.specs .country-flag {
+  margin-right: 8px;
 }
 .specs .container button {
   display: flex;
@@ -649,7 +697,13 @@ body.has-sticky-strip .sticky-product-bar {
   background: transparent;
   border: 1px solid var(--Colors-Neutral-white, #fff);
   color: var(--Colors-Neutral-white, #fff);
+  transition: gap 0.2s ease;
 }
+
+.specs .container button:hover {
+  gap: calc(var(--Spacing-8, 8px) + 5px);
+}
+
 .specs .container button img {
   width: 16px;
   height: 16px;
@@ -718,6 +772,8 @@ body.has-sticky-strip .sticky-product-bar {
   .brands .logo-container img:nth-child(5) {
     display: none;
   }
+
+
 }
 
 /* <=360px */
@@ -842,4 +898,22 @@ body.has-sticky-strip .sticky-product-bar {
   .product-btn-container {
     order: 4;
   }
+
+  .specs .container {
+    gap: 32px;
+  }
+
+  .specs .spec-header {
+    gap: 12px;
+  }
+
+  .specs .spec-header h2 {
+    font-size: 36px;
+  }
+
+  .specs .spec-header p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
 }
