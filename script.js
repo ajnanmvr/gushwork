@@ -76,7 +76,100 @@ function handleStickyHeader() {
 }
 
 // ================= CAROUSEL =================
-function initCarousel() {}
+function initCarousel() {
+  const carousel = document.querySelector(".applications-carousel");
+  const track = document.querySelector(".applications-track");
+  const prevBtn = document.querySelector(".app-control-prev");
+  const nextBtn = document.querySelector(".app-control-next");
+
+  if (!carousel || !track || !prevBtn || !nextBtn) return;
+
+  const originalSlides = Array.from(track.querySelectorAll(".application-card"));
+  if (originalSlides.length < 2) return;
+
+  // Clone the full set on both sides so wide viewports + half-card offset never reveal gaps.
+  const cloneCount = originalSlides.length;
+  const headClones = originalSlides
+    .slice(-cloneCount)
+    .map((slide) => slide.cloneNode(true));
+  const tailClones = originalSlides
+    .slice(0, cloneCount)
+    .map((slide) => slide.cloneNode(true));
+
+  headClones.forEach((clone) => {
+    clone.setAttribute("aria-hidden", "true");
+    track.insertBefore(clone, track.firstChild);
+  });
+
+  tailClones.forEach((clone) => {
+    clone.setAttribute("aria-hidden", "true");
+    track.appendChild(clone);
+  });
+
+  let currentIndex = cloneCount;
+  let isAnimating = false;
+
+  const getCardStep = () => {
+    const firstCard = track.querySelector(".application-card");
+    if (!firstCard) return 0;
+
+    const trackStyles = window.getComputedStyle(track);
+    const cardWidth = firstCard.getBoundingClientRect().width;
+    const gap = parseFloat(trackStyles.gap || "0");
+
+    return cardWidth + gap;
+  };
+
+  const getOffset = () => {
+    const firstCard = track.querySelector(".application-card");
+    if (!firstCard) return 0;
+
+    // Keep the first visible card half cut off on the left.
+    return firstCard.getBoundingClientRect().width * 0.34;
+  };
+
+  const setPosition = (withTransition = true) => {
+    const step = getCardStep();
+    const startOffset = getOffset();
+
+    track.style.transition = withTransition ? "transform 0.35s ease" : "none";
+    track.style.transform = `translateX(${-(currentIndex * step + startOffset)}px)`;
+  };
+
+  const goTo = (direction) => {
+    if (isAnimating) return;
+
+    isAnimating = true;
+    currentIndex += direction;
+    setPosition(true);
+  };
+
+  track.addEventListener("transitionend", () => {
+    const totalOriginal = originalSlides.length;
+
+    if (currentIndex >= totalOriginal + cloneCount) {
+      currentIndex = cloneCount;
+      setPosition(false);
+    } else if (currentIndex < cloneCount) {
+      currentIndex = totalOriginal + cloneCount - 1;
+      setPosition(false);
+    }
+
+    // Force reflow before restoring transition for next click.
+    track.getBoundingClientRect();
+    track.style.transition = "transform 0.35s ease";
+    isAnimating = false;
+  });
+
+  prevBtn.addEventListener("click", () => goTo(-1));
+  nextBtn.addEventListener("click", () => goTo(1));
+
+  prevBtn.disabled = false;
+  nextBtn.disabled = false;
+
+  window.addEventListener("resize", () => setPosition(false));
+  setPosition(false);
+}
 
 // ================= IMAGE ZOOM =================
 function handleImageZoom() {}
