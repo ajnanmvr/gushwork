@@ -273,7 +273,7 @@ function initTestimonialsCarousel() {
     if (!firstCard) return 0;
 
     // Keep the first visible card 34% cut off on the left
-    return firstCard.getBoundingClientRect().width * 0.65;
+    return firstCard.getBoundingClientRect().width * 0.9;
   };
 
   const setPosition = (withTransition = true) => {

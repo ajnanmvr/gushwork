@@ -2043,7 +2043,7 @@ body.has-sticky-strip .sticky-product-bar {
 }
 
 .cta-submit:hover {
-  background: #0070ff;
+  background: black;
 }
 
 /* ================= FOOTER ================= */
@@ -2478,7 +2478,11 @@ body.has-sticky-strip .sticky-product-bar {
   .product-btn-container button {
     align-self: stretch;
   }
-  .brands h2 {
+  .brands h2,
+  .feature-description,
+  .process-text p,
+  .cta-contact-note p,
+  .process-points li {
     font-size: 14px;
     line-height: 20px;
     letter-spacing: -0.084px;
@@ -2543,11 +2547,6 @@ body.has-sticky-strip .sticky-product-bar {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-  }
-
-  .feature-description {
-    font-size: 14px;
-    line-height: 20px;
   }
 
   .faq-title,
@@ -2618,82 +2617,85 @@ body.has-sticky-strip .sticky-product-bar {
     opacity: 0.8;
   }
 
-  .process-heading h2 {
+  .process-heading h2,
+  .testimonials-heading h2,
+  .portfolio-heading h2,
+  .resources-heading h2,
+  .cta-main-copy h2 {
     font-size: 36px;
   }
 
-  .process-heading p {
+  .process-heading p,
+  .testimonials-heading p,
+  .portfolio-heading p,
+  .resources-heading p,
+  .cta-main-copy p {
     font-size: 16px;
     line-height: 160%;
+    letter-spacing: -0.096px;
   }
   .process-panel {
     padding: 16px;
   }
 
-  .process-text p {
-    font-size: 14px;
-    line-height: 20px;
-  }
-
-  .process-points li {
-    font-size: 14px;
-    line-height: 20px;
-  }
   .process-media {
     width: 296px;
     height: 166.5px;
     aspect-ratio: 16/9;
   }
 
-  .portfolio .container {
-    gap: 32px;
+  .testimonials-track {
+    gap: 16px;
+  }
+  .testimonial-card {
+    flex: 0 0 280px;
+    padding: 20px;
+    align-items: flex-start;
   }
 
-  .portfolio-heading h2 {
-    font-size: 28px;
+  .testimonial-content p {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.084px;
   }
 
-  .portfolio-heading p {
+  .portfolio-card-content p,
+  .portfolio-card-btn {
     font-size: 14px;
     line-height: 20px;
   }
-
-  .portfolio-card-content h3 {
-    font-size: 20px;
+  .portfolio-card-media {
+    height: 140px;
   }
-
-  .portfolio-card-content p {
-    font-size: 13px;
-    line-height: 18px;
-  }
-
-  .portfolio-card {
-    padding: 16px;
-    gap: 16px;
+  .portfolio-card-btn {
+    padding: 8px 24px;
   }
 
   .portfolio-cta {
-    padding: 16px;
+    flex-direction: column;
     gap: 16px;
   }
 
-  .portfolio-cta-content h3 {
-    font-size: 18px;
-  }
-
-  .portfolio-cta-content p {
-    font-size: 12px;
-    line-height: 18px;
-  }
-
   .portfolio-cta-btn {
-    height: 40px;
-    padding: 8px 12px;
-    gap: 6px;
+    width: 100%;
+  }
+  .resource-item {
+    flex-direction: column;
+    align-items: start;
+    border-top: 1px solid #e1e3e8;
+    padding-top: 16px;
   }
 
-  .portfolio-cta-btn img {
-    width: 16px;
-    height: 16px;
+  .resource-item:nth-child(1) {
+    border-top: none;
+    padding-top: 0;
+  }
+  .cta-panel {
+    padding: 24px;
+    gap: 40px;
+    border-radius: 20px;
+  }
+  .cta-form {
+    padding: 20px;
   }
 }
