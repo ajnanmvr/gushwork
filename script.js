@@ -286,29 +286,76 @@ function handleImageZoom() {
 
   const zoomLevel = 3.2;
 
+  const getCoverMetrics = () => {
+    const displayWidth = image.clientWidth;
+    const displayHeight = image.clientHeight;
+    const naturalWidth = image.naturalWidth || displayWidth;
+    const naturalHeight = image.naturalHeight || displayHeight;
+
+    const scale = Math.max(
+      displayWidth / naturalWidth,
+      displayHeight / naturalHeight
+    );
+
+    const renderedWidth = naturalWidth * scale;
+    const renderedHeight = naturalHeight * scale;
+
+    return {
+      displayWidth,
+      displayHeight,
+      renderedWidth,
+      renderedHeight,
+      cropX: (renderedWidth - displayWidth) / 2,
+      cropY: (renderedHeight - displayHeight) / 2,
+    };
+  };
+
   const setLensBackground = () => {
+    const { renderedWidth, renderedHeight } = getCoverMetrics();
+
     lens.style.backgroundImage = `url("${image.currentSrc || image.src}")`;
-    lens.style.backgroundSize = `${image.clientWidth * zoomLevel}px ${image.clientHeight * zoomLevel}px`;
+    lens.style.backgroundSize = `${renderedWidth * zoomLevel}px ${renderedHeight * zoomLevel}px`;
   };
 
   const updateLensPosition = (clientX, clientY) => {
-    const rect = container.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
+    const rect = image.getBoundingClientRect();
+    const imageStyles = window.getComputedStyle(image);
+    const borderLeft = parseFloat(imageStyles.borderLeftWidth || "0");
+    const borderTop = parseFloat(imageStyles.borderTopWidth || "0");
+    const x = clientX - rect.left - borderLeft;
+    const y = clientY - rect.top - borderTop;
+
+    const { displayWidth, displayHeight, cropX, cropY } = getCoverMetrics();
 
     const focusHalfWidth = focus.offsetWidth / 2;
     const focusHalfHeight = focus.offsetHeight / 2;
 
-    const clampedX = Math.max(focusHalfWidth, Math.min(x, rect.width - focusHalfWidth));
-    const clampedY = Math.max(focusHalfHeight, Math.min(y, rect.height - focusHalfHeight));
+    const clampedX = Math.max(
+      focusHalfWidth,
+      Math.min(x, displayWidth - focusHalfWidth)
+    );
+    const clampedY = Math.max(
+      focusHalfHeight,
+      Math.min(y, displayHeight - focusHalfHeight)
+    );
 
     focus.style.left = `${clampedX}px`;
     focus.style.top = `${clampedY}px`;
 
     const lensWidth = lens.clientWidth;
     const lensHeight = lens.clientHeight;
-    const bgPosX = -(clampedX * zoomLevel - lensWidth / 2);
-    const bgPosY = -(clampedY * zoomLevel - lensHeight / 2);
+
+    const lensTop = Math.max(
+      lensHeight / 2,
+      Math.min(clampedY, displayHeight - lensHeight / 2)
+    );
+    lens.style.top = `${lensTop}px`;
+
+    const coverX = clampedX + cropX;
+    const coverY = clampedY + cropY;
+
+    const bgPosX = -(coverX * zoomLevel - lensWidth / 2);
+    const bgPosY = -(coverY * zoomLevel - lensHeight / 2);
     lens.style.backgroundPosition = `${bgPosX}px ${bgPosY}px`;
   };
 
