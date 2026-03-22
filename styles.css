@@ -110,6 +110,13 @@ h2 {
   line-height: 140%;
   letter-spacing: -0.12px;
 }
+.home-vector {
+  width: 600.5px;
+  height: 609.5px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 /* ================= HEADER ================= */
 .header {
   position: relative;
@@ -761,7 +768,9 @@ body.has-sticky-strip .sticky-product-bar {
 }
 
 .specs .country-flag {
+  height: 20px;
   margin-right: 8px;
+  vertical-align: -6px;
 }
 .specs .container button {
   display: flex;
