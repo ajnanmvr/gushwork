@@ -77,14 +77,14 @@
                   <button>
                     <img
                       class="slider-prev"
-                      src="assets/icons/arrow-right.svg"
+                      src="assets/icons/arrow-left.svg"
                       alt="Previous"
                     />
                   </button>
                   <button>
                     <img
                       class="slider-next"
-                      src="assets/icons/arrow-right.svg"
+                      src="assets/icons/arrow-left.svg"
                       alt="Next"
                     />
                   </button>
@@ -105,7 +105,7 @@
                 <div class="certifications body-14-med">
                   <span>
                     <img
-                      src="assets/images/bis-certified.svg"
+                      src="assets/icons/bis-certified.svg"
                       alt="BIS Certified"
                       class="bis"
                     />
@@ -528,14 +528,14 @@
               type="button"
               aria-label="Previous slide"
             >
-              <img src="assets/icons/arrow-right.svg" alt="" />
+              <img src="assets/icons/arrow-left.svg" alt="" />
             </button>
             <button
               class="app-control app-control-next"
               type="button"
               aria-label="Next slide"
             >
-              <img src="assets/icons/arrow-right.svg" alt="" />
+              <img src="assets/icons/arrow-left.svg" alt="" />
             </button>
           </div>
         </div>
@@ -642,10 +642,7 @@
           </div>
 
           <div class="process-panel">
-            <div
-              class="process-steps"
-              role="tablist"
-            >
+            <div class="process-steps" role="tablist">
               <button
                 class="process-step is-active body-14-med"
                 type="button"
@@ -715,7 +712,9 @@
             <div class="process-body">
               <div class="process-text">
                 <div class="process-mobile-header">
-                  <span class="process-mobile-step-label body-14-med">Step 1/8: Raw Material</span>
+                  <span class="process-mobile-step-label body-14-med"
+                    >Step 1/8: Raw Material</span
+                  >
                 </div>
                 <h3>High-Grade Raw Material Selection</h3>
                 <p class="body-18-reg">
@@ -746,83 +745,474 @@
                   class="process-media-nav process-media-prev"
                   aria-label="Previous process image"
                 >
-                  <img src="assets/icons/arrow-right.svg" alt="Previous" />
+                  <img src="assets/icons/arrow-left.svg" alt="Previous" />
                 </button>
                 <button
                   type="button"
                   class="process-media-nav process-media-next"
                   aria-label="Next process image"
                 >
-                  <img src="assets/icons/arrow-right.svg" alt="Next" />
+                  <img src="assets/icons/arrow-left.svg" alt="Next" />
                 </button>
               </div>
             </div>
 
-            <div class="process-mobile-nav" aria-label="Process step navigation">
-              <button type="button" class="process-mobile-btn process-mobile-prev body-14-med">
-                <img src="assets/icons/arrow-right.svg" alt="" />
+            <div
+              class="process-mobile-nav"
+              aria-label="Process step navigation"
+            >
+              <button
+                type="button"
+                class="process-mobile-btn process-mobile-prev body-14-med"
+              >
+                <img src="assets/icons/arrow-left.svg" alt="" />
                 Previous
               </button>
-              <button type="button" class="process-mobile-btn process-mobile-next body-14-med">
+              <button
+                type="button"
+                class="process-mobile-btn process-mobile-next body-14-med"
+              >
                 Next
-                <img src="assets/icons/arrow-right.svg" alt="" />
+                <img src="assets/icons/arrow-left.svg" alt="" />
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="testimonials placeholder-section">
-        <div class="container">
-          <h2>Testimonials</h2>
+      <section class="testimonials">
+        <div class="testimonials-heading">
+          <h2>Trusted Performance. Proven Results</h2>
           <p class="body-18-reg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-            faucibus mollis interdum.
+            From innovative Two-For-One Twisters to specialized heat setting
+            machines, we deliver complete solutions for modern textile
+            manufacturing.
           </p>
+        </div>
+
+        <div class="testimonials-carousel" aria-label="Customer testimonials">
+          <div class="testimonials-track">
+            <article class="testimonial-card">
+              <div class="testimonial-content">
+                <img
+                  src="assets/icons/quote.svg"
+                  alt=""
+                  class="testimonial-quote"
+                  aria-hidden="true"
+                />
+                <div>
+                  <h3>Revolutionized our FIBC production efficiency!</h3>
+                  <p class="body-16-reg">
+                    Meera Industries' TFO machines have revolutionized our FIBC
+                    production efficiency. The precision engineering delivers
+                    the consistent yarn strengths critical for our bulk
+                    container applications.
+                  </p>
+                </div>
+              </div>
+              <div class="testimonial-author">
+                <span class="testimonial-avatar" aria-hidden="true"></span>
+                <div>
+                  <p class="body-16-med testimonial-name">Johann Mueller</p>
+                  <p class="testimonial-role">Production Director</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card">
+              <div class="testimonial-content">
+                <img
+                  src="assets/icons/quote.svg"
+                  alt="quotation icon"
+                  aria-hidden="true"
+                />
+                <div>
+                  <h3>Excellent support for specialized applications.</h3>
+                  <p class="body-16-reg">
+                    The durability and performance of Meera's fishnet processing
+                    equipment has significantly improved our marine product
+                    quality. Excellent support for specialized applications.
+                  </p>
+                </div>
+              </div>
+              <div class="testimonial-author">
+                <span class="testimonial-avatar" aria-hidden="true"></span>
+                <div>
+                  <p class="body-16-med testimonial-name">Carlos Mendoza</p>
+                  <p class="testimonial-role">Operations Manager</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card">
+              <div class="testimonial-content">
+                <img
+                  src="assets/icons/quote.svg"
+                  alt=""
+                  class="testimonial-quote"
+                  aria-hidden="true"
+                />
+                <div>
+                  <h3>Excellent support for specialized applications.</h3>
+                  <p class="body-16-reg">
+                    The durability and performance of Meera's fishnet processing
+                    equipment has significantly improved our marine product
+                    quality. Excellent support for specialized applications.
+                  </p>
+                </div>
+              </div>
+              <div class="testimonial-author">
+                <span class="testimonial-avatar" aria-hidden="true"></span>
+                <div>
+                  <p class="body-16-med testimonial-name">Carlos Mendoza</p>
+                  <p class="testimonial-role">Operations Manager</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card">
+              <div class="testimonial-content">
+                <img
+                  src="assets/icons/quote.svg"
+                  alt=""
+                  class="testimonial-quote"
+                  aria-hidden="true"
+                />
+                <div>
+                  <h3>Provides the exact specifications we need!</h3>
+                  <p class="body-16-reg">
+                    For our technical textile applications, Meera's specialized
+                    machinery provides the exact specifications we need. Their
+                    understanding of automotive textile requirements is
+                    exceptional.
+                  </p>
+                </div>
+              </div>
+              <div class="testimonial-author">
+                <span class="testimonial-avatar" aria-hidden="true"></span>
+                <div>
+                  <p class="body-16-med testimonial-name">Rajesh Kumar</p>
+                  <p class="testimonial-role">Manufacturing Head</p>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section class="portfolio placeholder-section">
+      <section class="portfolio">
         <div class="container">
-          <h2>Portfolio</h2>
-          <p class="body-18-reg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            blandit tempus porttitor.
-          </p>
+          <div class="portfolio-heading">
+            <h2>Complete Piping Solutions Portfolio</h2>
+            <p class="body-18-reg">
+              From innovative Two-For-One Twisters to specialized heat setting
+              machines, we deliver complete solutions for modern textile
+              manufacturing.
+            </p>
+          </div>
+
+          <div class="portfolio-grid">
+            <div class="portfolio-card">
+              <div class="portfolio-card-content">
+                <h3>HDPE Fittings & Accessories</h3>
+                <p class="body-16-reg">
+                  Complete range of electrofusion and butt fusion fittings,
+                  including elbows, tees, reducers, and couplers for seamless
+                  pipe connections.
+                </p>
+              </div>
+              <div>
+                <div class="portfolio-card-media">
+                  <img
+                    src="assets/images/portfolio-1.png"
+                    alt="HDPE Fittings & Accessories"
+                    class="portfolio-card-image"
+                  />
+                </div>
+                <button class="portfolio-card-btn body-16-med">
+                  Learn More
+                </button>
+              </div>
+            </div>
+
+            <div class="portfolio-card">
+              <div class="portfolio-card-content">
+                <h3>Professional Installation Services</h3>
+                <p class="body-16-reg">
+                  Expert installation and fusion welding services ensuring
+                  optimal system performance, compliance with standards, and
+                  long-term reliability.
+                </p>
+              </div>
+              <div>
+                <div class="portfolio-card-media">
+                  <img
+                    src="assets/images/portfolio-2.png"
+                    alt="Professional Installation Services"
+                    class="portfolio-card-image"
+                  />
+                </div>
+                <button class="portfolio-card-btn body-16-med">
+                  Learn More
+                </button>
+              </div>
+            </div>
+
+            <div class="portfolio-card">
+              <div class="portfolio-card-content">
+                <h3>PE-RT Heating Pipes</h3>
+                <p class="body-16-reg">
+                  Polyethylene of Raised Temperature resistance pipes ideal for
+                  underfloor heating, radiator connections, and hot water
+                  applications.
+                </p>
+              </div>
+              <div>
+                <div class="portfolio-card-media">
+                  <img
+                    src="assets/images/portfolio-1.png"
+                    alt="PE-RT Heating Pipes"
+                    class="portfolio-card-image"
+                  />
+                </div>
+                <button class="portfolio-card-btn body-16-med">
+                  Learn More
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="portfolio-cta">
+            <div class="portfolio-cta-content">
+              <h3>
+                Didn't find what
+                <span class="portfolio-cta-highlight">you're looking for?</span>
+              </h3>
+              <p class="body-16-reg">
+                Talk to our experts for custom solutions and tailored guidance.
+              </p>
+            </div>
+            <button class="portfolio-cta-btn body-16-med">
+              <img src="assets/icons/phone-call.svg" alt="phone" />
+              Talk to an Expert
+            </button>
+          </div>
         </div>
       </section>
 
-      <section class="resources placeholder-section">
+      <section class="resources">
         <div class="container">
-          <h2>Resources</h2>
-          <p class="body-18-reg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-            commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
+          <div class="resources-heading">
+            <h2>Resources & Downloads</h2>
+            <p>
+              Get all the technical documentation and resources you need to make
+              informed decisions about our HDPE piping solutions.
+            </p>
+          </div>
+
+          <div
+            class="resources-list"
+            role="list"
+            aria-label="Technical resources"
+          >
+            <div class="resource-item" role="listitem">
+              <p class="body-16-med">HDPE Pipe Installation Manual (PDF)</p>
+              <a class="resource-download body-16-sem" href="#">
+                <span>Download PDF</span>
+                <img src="assets/icons/download-blue.svg" alt="download icon" />
+              </a>
+            </div>
+
+            <div class="resource-item" role="listitem">
+              <p class="body-16-med">Maintenance & Inspection Handbook (PDF)</p>
+              <a class="resource-download body-16-sem" href="#">
+                <span>Download PDF</span>
+                <img src="assets/icons/download-blue.svg" alt="download icon" />
+              </a>
+            </div>
+
+            <div class="resource-item" role="listitem">
+              <p class="body-16-med">Engineering Specifications Sheet (PDF)</p>
+              <a class="resource-download body-16-sem" href="#">
+                <span>Download PDF</span>
+                <img src="assets/icons/download-blue.svg" alt="download icon" />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="cta placeholder-section">
+      <section class="cta">
         <div class="container">
-          <h2>Call To Action</h2>
-          <p class="body-18-reg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis
-            risus eget urna mollis ornare vel eu leo.
-          </p>
+          <div class="cta-panel">
+            <div class="cta-copy">
+              <div class="cta-main-copy">
+                <h2>Ready to Transform Your Textile Manufacturing?</h2>
+                <p class="body-18-reg">
+                  Get a personalized consultation and quote for machinery
+                  solutions tailored to your specific production requirements.
+                </p>
+              </div>
+
+              <div class="cta-contact-note">
+                <p class="body-14-reg">
+                  For immediate assistance, feel free to give us a direct call
+                  at <strong>+91-XXX-XXX-XXXX.</strong> You can also send us a
+                  quick email at
+                  <a href="mailto:info@meeraind.com">info@meeraind.com</a>
+                </p>
+              </div>
+            </div>
+
+            <form class="cta-form" action="#" method="post">
+              <p class="body-16-med cta-form-title">Contact Us Today</p>
+
+              <div class="cta-form-fields body-14-reg">
+                <input
+                  type="text"
+                  name="fullName"
+                  class="body-14-reg"
+                  placeholder="Full Name"
+                  aria-label="Full Name"
+                />
+                <input
+                  type="text"
+                  class="body-14-reg"
+                  name="companyName"
+                  placeholder="Company Name"
+                  aria-label="Company Name"
+                />
+                <input
+                  type="email"
+                  class="body-14-reg"
+                  name="email"
+                  placeholder="Email Address"
+                  aria-label="Email Address"
+                />
+
+                <div class="cta-phone-field">
+                  <button
+                    type="button"
+                    class="cta-country-code body-14-reg"
+                    aria-label="Country code"
+                  >
+                    +91
+                    <img src="assets/icons/caret-down.svg" alt="" />
+                  </button>
+                  <input
+                    type="tel"
+                    class="body-14-reg"
+                    name="phone"
+                    placeholder="7003026616"
+                    aria-label="Phone number"
+                  />
+                </div>
+              </div>
+
+              <button type="submit" class="cta-submit body-14-med">
+                Request Custom Quote
+              </button>
+            </form>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="footer placeholder-section">
-      <div class="container">
-        <h2>Footer</h2>
-        <p class="body-18-reg">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id elit
-          non mi porta gravida at eget metus.
-        </p>
+    <footer class="footer">
+      <div class="footer-main">
+        <div class="container">
+          <div class="footer-brand-card">
+            <img
+              src="assets/images/logo.png"
+              alt="Mangalam HDPE Pipes"
+              class="footer-logo"
+            />
+            <p class="footer-tagline">
+              Premium <span>HDPE Pipes & Fittings Manufacturer</span> in South
+              India
+            </p>
+          </div>
+
+          <div class="footer-grid">
+            <div class="footer-column">
+              <h4>About Us</h4>
+              <a href="#">About Us</a>
+            </div>
+
+            <div class="footer-column">
+              <h4>Categories</h4>
+              <a href="#">Packaging Industry Solutions</a>
+              <a href="#">Fishnet Manufacturing</a>
+              <a href="#">PPMF/Tapes and Twines</a>
+              <a href="#">FIBC and Woven Sack</a>
+              <a href="#">Carpet and Rugs Industry</a>
+              <a href="#">Technical Textiles</a>
+            </div>
+
+            <div class="footer-column">
+              <h4>Products</h4>
+              <a href="#">Two For One Twister</a>
+              <a href="#">TPRS Twister Machine</a>
+              <a href="#">Ring Twisting Machines</a>
+              <a href="#">Covering Machines</a>
+              <a href="#">Heat Setting Equipment</a>
+              <a href="#">Servo Controlled Winders</a>
+            </div>
+
+            <div class="footer-column footer-contact">
+              <h4>Contact</h4>
+              <p>
+                <span class="footer-icon" aria-hidden="true">
+                  <img src="assets/icons/location.svg" alt="Location" />
+                </span>
+                2126, Road No. 2, GIDC Sachin, Surat - 394 230 Gujarat, India
+              </p>
+              <p>
+                <span class="footer-icon" aria-hidden="true">
+                  <img src="assets/icons/phone.svg" alt="Phone" />
+                </span>
+                +91-XXX-XXX-XXXX
+              </p>
+              <p>
+                <span class="footer-icon" aria-hidden="true">
+                  <img src="assets/icons/mail.svg" alt="Email" />
+                </span>
+                info@meeraind.com
+              </p>
+              <p>
+                <span class="footer-icon" aria-hidden="true">
+                  <img src="assets/icons/support.svg" alt="Support" />
+                </span>
+                support@meeraind.com
+              </p>
+
+              <div class="footer-socials" aria-label="Social links">
+                <a href="#" aria-label="LinkedIn">
+                  <img src="assets/icons/linkedin.svg" alt="LinkedIn" />
+                </a>
+                <a href="#" aria-label="X">
+                  <img src="assets/icons/x.svg" alt="X/Twitter" />
+                </a>
+                <a href="#" aria-label="Instagram">
+                  <img src="assets/icons/instagram.svg" alt="Instagram" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container">
+          <p>Copyright &copy; 2025 Meera Industries Limited | All Rights Reserved</p>
+          <div class="footer-legal-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Sitemap</a>
+          </div>
+        </div>
       </div>
     </footer>
-    <div style="height: 2000px"></div>
     <script src="script.js" defer></script>
   </body>
 </html>

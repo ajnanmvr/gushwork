@@ -224,6 +224,111 @@ function initProcessSteps() {
   updateStepState();
 }
 
+// ================= TESTIMONIALS CAROUSEL =================
+function initTestimonialsCarousel() {
+  const carousel = document.querySelector(".testimonials-carousel");
+  const track = document.querySelector(".testimonials-track");
+
+  if (!carousel || !track) return;
+
+  const originalCards = Array.from(track.querySelectorAll(".testimonial-card"));
+  if (originalCards.length < 2) return;
+
+  // Clone the full set on both sides for infinite scroll
+  const cloneCount = originalCards.length;
+  const headClones = originalCards
+    .slice(-cloneCount)
+    .map((card) => card.cloneNode(true));
+  const tailClones = originalCards
+    .slice(0, cloneCount)
+    .map((card) => card.cloneNode(true));
+
+  headClones.forEach((clone) => {
+    clone.setAttribute("aria-hidden", "true");
+    track.insertBefore(clone, track.firstChild);
+  });
+
+  tailClones.forEach((clone) => {
+    clone.setAttribute("aria-hidden", "true");
+    track.appendChild(clone);
+  });
+
+  let currentIndex = cloneCount;
+  let isAnimating = false;
+  let wheelTimeout;
+
+  const getCardStep = () => {
+    const firstCard = track.querySelector(".testimonial-card");
+    if (!firstCard) return 0;
+
+    const trackStyles = window.getComputedStyle(track);
+    const cardWidth = firstCard.getBoundingClientRect().width;
+    const gap = parseFloat(trackStyles.gap || "0");
+
+    return cardWidth + gap;
+  };
+
+  const getOffset = () => {
+    const firstCard = track.querySelector(".testimonial-card");
+    if (!firstCard) return 0;
+
+    // Keep the first visible card 34% cut off on the left
+    return firstCard.getBoundingClientRect().width * 0.34;
+  };
+
+  const setPosition = (withTransition = true) => {
+    const step = getCardStep();
+    const startOffset = getOffset();
+
+    track.style.transition = withTransition ? "transform 0.35s ease" : "none";
+    track.style.transform = `translateX(${-(currentIndex * step + startOffset)}px)`;
+  };
+
+  const scroll = (direction) => {
+    if (isAnimating) return;
+
+    isAnimating = true;
+    currentIndex += direction;
+    setPosition(true);
+  };
+
+  track.addEventListener("transitionend", () => {
+    const totalOriginal = originalCards.length;
+
+    if (currentIndex >= totalOriginal + cloneCount) {
+      currentIndex = cloneCount;
+      setPosition(false);
+    } else if (currentIndex < cloneCount) {
+      currentIndex = totalOriginal + cloneCount - 1;
+      setPosition(false);
+    }
+
+    // Force reflow before restoring transition for next scroll
+    track.getBoundingClientRect();
+    track.style.transition = "transform 0.35s ease";
+    isAnimating = false;
+  });
+
+  // Mouse wheel scroll
+  carousel.addEventListener("wheel", (e) => {
+    e.preventDefault();
+
+    clearTimeout(wheelTimeout);
+
+    // Determine scroll direction
+    const direction = e.deltaY > 0 ? 1 : -1;
+    scroll(direction);
+
+    // Reset animation flag after timeout to allow another scroll
+    wheelTimeout = setTimeout(() => {
+      isAnimating = false;
+    }, 50);
+  }, { passive: false });
+
+  window.addEventListener("resize", () => setPosition(false));
+  setPosition(false);
+}
+
 // ================= FAQ TOGGLE =================
 function handleFAQ() {
   const faqItems = document.querySelectorAll(".faq-item");
@@ -263,6 +368,7 @@ function handleFAQ() {
 document.addEventListener("DOMContentLoaded", () => {
   handleStickyHeader();
   initCarousel();
+  initTestimonialsCarousel();
   handleImageZoom();
   initProcessSteps();
   handleFAQ();
