@@ -172,7 +172,71 @@ function initCarousel() {
 }
 
 // ================= IMAGE ZOOM =================
-function handleImageZoom() {}
+function handleImageZoom() {
+  const container = document.querySelector(".hero-image-container");
+  const image = document.querySelector(".hero-image");
+  const focus = document.querySelector(".hero-zoom-focus");
+  const lens = document.querySelector(".hero-zoom-lens");
+
+  if (!container || !image || !focus || !lens) return;
+
+  const zoomLevel = 3.2;
+
+  const setLensBackground = () => {
+    lens.style.backgroundImage = `url("${image.currentSrc || image.src}")`;
+    lens.style.backgroundSize = `${image.clientWidth * zoomLevel}px ${image.clientHeight * zoomLevel}px`;
+  };
+
+  const updateLensPosition = (clientX, clientY) => {
+    const rect = container.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    const focusHalfWidth = focus.offsetWidth / 2;
+    const focusHalfHeight = focus.offsetHeight / 2;
+
+    const clampedX = Math.max(focusHalfWidth, Math.min(x, rect.width - focusHalfWidth));
+    const clampedY = Math.max(focusHalfHeight, Math.min(y, rect.height - focusHalfHeight));
+
+    focus.style.left = `${clampedX}px`;
+    focus.style.top = `${clampedY}px`;
+
+    const lensWidth = lens.clientWidth;
+    const lensHeight = lens.clientHeight;
+    const bgPosX = -(clampedX * zoomLevel - lensWidth / 2);
+    const bgPosY = -(clampedY * zoomLevel - lensHeight / 2);
+    lens.style.backgroundPosition = `${bgPosX}px ${bgPosY}px`;
+  };
+
+  const handlePointerMove = (event) => {
+    updateLensPosition(event.clientX, event.clientY);
+  };
+
+  const handlePointerEnter = (event) => {
+    setLensBackground();
+    focus.classList.add("is-visible");
+    lens.classList.add("is-visible");
+    container.classList.add("is-zoom-active");
+    updateLensPosition(event.clientX, event.clientY);
+  };
+
+  const handlePointerLeave = () => {
+    focus.classList.remove("is-visible");
+    lens.classList.remove("is-visible");
+    container.classList.remove("is-zoom-active");
+  };
+
+  container.addEventListener("mousemove", handlePointerMove);
+  container.addEventListener("mouseenter", handlePointerEnter);
+  container.addEventListener("mouseleave", handlePointerLeave);
+  window.addEventListener("resize", setLensBackground);
+
+  if (image.complete) {
+    setLensBackground();
+  } else {
+    image.addEventListener("load", setLensBackground, { once: true });
+  }
+}
 
 // ================= PROCESS STEPS =================
 function initProcessSteps() {

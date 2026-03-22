@@ -371,8 +371,61 @@ body.has-sticky-strip .sticky-product-bar {
   align-items: center;
   position: relative;
   border-radius: 24px;
+  overflow: visible;
   box-shadow: 0 20px 40px -8px rgba(88, 92, 95, 0.2);
 }
+
+.hero-image-container.is-zoom-active {
+  cursor: none;
+}
+
+.hero-zoom-focus {
+  position: absolute;
+  width: 124px;
+  height: 124px;
+  border: 1px solid #b1b1b1;
+  background: rgba(82, 82, 82, 0.3);
+  backdrop-filter: blur(1px);
+  display: none;
+  pointer-events: none;
+  z-index: 14;
+  transform: translate(-50%, -50%);
+}
+
+.hero-zoom-focus.is-visible {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-zoom-lens {
+  position: absolute;
+  left: calc(100% + 14px);
+  top: 50%;
+  width: 350px;
+  height: 350px;
+  border-radius: 12px;
+  border: 2px solid #909090;
+  box-shadow: 0 20px 40px -8px rgba(88, 92, 95, 0.2);
+  display: none;
+  pointer-events: none;
+  z-index: 20;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  transform: translateY(-50%);
+  overflow: hidden;
+}
+
+.hero-zoom-lens.is-visible {
+  display: block;
+}
+
+.hero-zoom-cursor-icon {
+  width:50px;
+  height: 50px;
+  background: url("./assets/icons/zoom.svg") center/contain no-repeat;
+}
+
 .hero-image {
   height: var(--hero-image-size);
   aspect-ratio: 1/1;
