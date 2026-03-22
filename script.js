@@ -329,6 +329,100 @@ function initTestimonialsCarousel() {
   setPosition(false);
 }
 
+// ================= MODALS & POPUPS =================
+function bindModal({
+  triggerSelector,
+  modalSelector,
+  panelSelector,
+  closeSelector,
+  onOpen,
+}) {
+  const triggers = Array.from(document.querySelectorAll(triggerSelector));
+  const modal = document.querySelector(modalSelector);
+  const panel = document.querySelector(panelSelector);
+  const closeButton = document.querySelector(closeSelector);
+
+  if (!triggers.length || !modal || !panel || !closeButton) return;
+
+  const openModal = () => {
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    if (onOpen) onOpen();
+  };
+
+  const closeModal = () => {
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+  };
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", openModal);
+  });
+
+  closeButton.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", (event) => {
+    if (!panel.contains(event.target)) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal.classList.contains("is-open")) {
+      closeModal();
+    }
+  });
+}
+
+function initDatasheetPopup() {
+  const emailInput = document.querySelector("#datasheet-email");
+  const submitButton = document.querySelector(".datasheet-submit-btn");
+
+  const setSubmitState = () => {
+    if (!emailInput || !submitButton) return;
+    const hasEmail = emailInput.value.trim().length > 0;
+    submitButton.disabled = !hasEmail;
+    submitButton.classList.toggle("is-ready", hasEmail);
+  };
+
+  if (emailInput) {
+    emailInput.addEventListener("input", setSubmitState);
+  }
+
+  bindModal({
+    triggerSelector: ".specs-datasheet-trigger",
+    modalSelector: ".datasheet-modal",
+    panelSelector: ".datasheet-modal-panel",
+    closeSelector: ".datasheet-modal-close",
+    onOpen: () => {
+      if (emailInput) {
+        window.setTimeout(() => emailInput.focus(), 0);
+      }
+      setSubmitState();
+    },
+  });
+
+  setSubmitState();
+}
+
+function initQuotePopup() {
+  const firstInput = document.querySelector('.quote-modal-form input[name="fullName"]');
+
+  bindModal({
+    triggerSelector: ".quote-modal-trigger",
+    modalSelector: ".quote-modal",
+    panelSelector: ".quote-modal-panel",
+    closeSelector: ".quote-modal-close",
+    onOpen: () => {
+      if (firstInput) {
+        window.setTimeout(() => firstInput.focus(), 0);
+      }
+    },
+  });
+}
+
 // ================= FAQ TOGGLE =================
 function handleFAQ() {
   const faqItems = document.querySelectorAll(".faq-item");
@@ -371,5 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initTestimonialsCarousel();
   handleImageZoom();
   initProcessSteps();
+  initDatasheetPopup();
+  initQuotePopup();
   handleFAQ();
 });
