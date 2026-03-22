@@ -7,10 +7,20 @@
 :root {
   --color-neutral-25: #f7f8f9;
   --color-neutral-100: #e1e3e8;
+  --color-neutral-200: #cfd1d4;
+  --color-neutral-500: #878b94;
+  --color-neutral-600: #6a7077;
+  --color-neutral-700: #535a61;
   --color-neutral-800: #4d545c;
   --color-neutral-900: #262a2e;
+  --color-nuetral-black: #0d0d0d;
+  --color-neutral-white: #fff;
+  --color-neutral-alpha-80-white: rgba(255, 255, 255, 0.8);
   --color-medium-1: #4b5563;
   --color-primary: #2b3990;
+  --color-primary-500-main: #0070ff;
+  --color-secondary-500-main: #111827;
+  --color-gray-700: #374151;
 
   --container-max: 1240px;
 
@@ -247,12 +257,12 @@ body.has-sticky-strip .sticky-product-bar {
 .sticky-product-cta {
   display: flex;
   height: 52px;
-  padding: var(--Spacing-16, 16px) var(--Spacing-24, 24px);
+  padding: 16px 24px;
   justify-content: center;
   align-items: center;
   gap: 4px;
   border: none;
-  border-radius: var(--Radius-12, 12px);
+  border-radius: 12px;
   background: #2b3990;
   color: #fff;
   font-size: 16px;
@@ -308,7 +318,7 @@ body.has-sticky-strip .sticky-product-bar {
 }
 
 .nav .contact-btn:hover {
-  background: var(--Colors-Primary-500-main, #0070ff);
+  background: var(--color-primary-500-main);
 }
 
 /* ================= HERO ================= */
@@ -355,11 +365,11 @@ body.has-sticky-strip .sticky-product-bar {
 }
 .breadcrumbs a {
   text-decoration: none;
-  color: var(--Colors-Neutral-800, #4d545c);
+  color: var(--color-neutral-800);
   transition: all 0.25s ease;
 }
 .breadcrumbs .active {
-  color: var(--Colors-Neutral-black, #0d0d0d);
+  color: var(--color-nuetral-black);
 }
 .breadcrumbs img {
   width: 12px;
@@ -493,7 +503,7 @@ body.has-sticky-strip .sticky-product-bar {
   width: 80px;
   height: 80px;
   border-radius: 8px;
-  border: 1px solid var(--Colors-Neutral-200, #cfd1d4);
+  border: 1px solid var(--color-neutral-200);
   background: #fff;
 }
 .hero-content {
@@ -542,12 +552,12 @@ body.has-sticky-strip .sticky-product-bar {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--Spacing-16, 16px);
+  gap: 16px;
   align-self: stretch;
 }
 .product-specs h1 {
   align-self: stretch;
-  color: var(--Colors-Secondary-500-main, #111827);
+  color: var(--color-secondary-500-main);
 }
 .product-specs ul {
   display: flex;
@@ -562,7 +572,7 @@ body.has-sticky-strip .sticky-product-bar {
   min-width: 240px;
   align-items: center;
   gap: 6px;
-  color: var(--Colors-Neutral-black, #0d0d0d);
+  color: var(--color-nuetral-black);
 }
 .product-specs ul li img {
   width: 16px;
@@ -576,7 +586,7 @@ body.has-sticky-strip .sticky-product-bar {
   gap: 16px;
   align-self: stretch;
   border-radius: 10px;
-  border: 1px solid var(--Colors-Neutral-200, #cfd1d4);
+  border: 1px solid var(--color-neutral-200);
   background: #fff;
 }
 .price-details {
@@ -588,10 +598,10 @@ body.has-sticky-strip .sticky-product-bar {
   gap: 8px;
 }
 .price-details .title {
-  color: var(--Colors-Neutral-600, #6a7077);
+  color: var(--color-neutral-600);
 }
 .price-details .price {
-  color: var(--Colors-Neutral-black, #0d0d0d);
+  color: var(--color-nuetral-black);
 }
 .delivery-details {
   display: flex;
@@ -626,7 +636,7 @@ body.has-sticky-strip .sticky-product-bar {
 .product-btn-container {
   display: flex;
   align-items: center;
-  gap: var(--Spacing-12, 12px);
+  gap: 12px;
 }
 .product-btn-container button {
   border: none;
@@ -634,23 +644,23 @@ body.has-sticky-strip .sticky-product-bar {
   background-color: transparent;
   display: flex;
   height: 52px;
-  padding: var(--Spacing-16, 16px) var(--Spacing-24, 24px);
+  padding: 16px 24px;
   justify-content: center;
   align-items: center;
   gap: 4px;
 }
 .product-btn-container button.filled {
-  border-radius: var(--Radius-12, 12px);
+  border-radius: 12px;
   background: #2b3990;
-  color: var(--Colors-Neutral-white, #fff);
+  color: var(--color-neutral-white);
 }
 .product-btn-container button.filled:hover {
-  background: var(--Colors-Primary-500-main, #0070ff);
+  background: var(--color-primary-500-main);
 }
 .product-btn-container button.outlined {
-  border-radius: var(--Radius-12, 12px);
+  border-radius: 12px;
   border: 1px solid #2b3990;
-  color: var(--Colors-Neutral-900, #262a2e);
+  color: var(--color-neutral-900);
 }
 .product-btn-container button.outlined img {
   transform: rotate(-90deg);
@@ -663,11 +673,11 @@ body.has-sticky-strip .sticky-product-bar {
   max-width: 1240px;
   flex-direction: column;
   align-items: center;
-  gap: var(--Spacing-20, 20px);
+  gap: 20px;
   align-self: stretch;
 }
 .brands h2 {
-  color: var(--Colors-Neutral-500, #878b94);
+  color: var(--color-neutral-500);
 }
 .brands .logo-container {
   display: flex;
@@ -684,7 +694,7 @@ body.has-sticky-strip .sticky-product-bar {
 }
 /* ================= SPECS ================= */
 .specs {
-  background: var(--Colors-Secondary-500-main, #111827);
+  background: var(--color-secondary-500-main);
   padding: var(--padding-y) var(--padding-x);
 }
 .specs .container {
@@ -706,11 +716,11 @@ body.has-sticky-strip .sticky-product-bar {
 }
 .specs .spec-header h2 {
   align-self: stretch;
-  color: var(--Colors-Neutral-white, #fff);
+  color: var(--color-neutral-white);
 }
 .specs .spec-header p {
   align-self: stretch;
-  color: var(--Colors-Neutral-Alpha-80-white, rgba(255, 255, 255, 0.8));
+  color: var(--color-neutral-alpha-80-white);
 }
 .specs .table {
   display: flex;
@@ -718,7 +728,7 @@ body.has-sticky-strip .sticky-product-bar {
   align-items: flex-start;
   align-self: stretch;
   border-radius: 16px;
-  border: 1.25px solid var(--gray-700, #374151);
+  border: 1.25px solid var(--color-gray-700);
   background: #1f2937;
   overflow: hidden;
   box-shadow: 0 2px 4px 0 rgba(27, 28, 29, 0.04);
@@ -737,7 +747,7 @@ body.has-sticky-strip .sticky-product-bar {
 }
 
 .specs .specs-data-table th {
-  background: var(--gray-700, #374151);
+  background: var(--color-gray-700);
   align-items: center;
   padding: 12px 24px;
 }
@@ -775,20 +785,19 @@ body.has-sticky-strip .sticky-product-bar {
 .specs .container button {
   display: flex;
   height: 52px;
-  padding: var(--Spacing-16, 16px) var(--Spacing-20, 20px)
-    var(--Spacing-16, 16px) var(--Spacing-16, 16px);
+  padding: 16px 20px 16px 16px;
   justify-content: center;
   align-items: center;
-  gap: var(--Spacing-8, 8px);
-  border-radius: var(--Radius-12, 12px);
+  gap: 8px;
+  border-radius: 12px;
   background: transparent;
-  border: 1px solid var(--Colors-Neutral-white, #fff);
-  color: var(--Colors-Neutral-white, #fff);
+  border: 1px solid var(--color-neutral-white);
+  color: var(--color-neutral-white);
   transition: gap 0.2s ease;
 }
 
 .specs .container button:hover {
-  gap: calc(var(--Spacing-8, 8px) + 5px);
+  gap: calc(8px + 5px);
 }
 
 .specs .container button img {
@@ -1352,7 +1361,7 @@ body.modal-open {
 }
 
 .faq-cta-title {
-  color: var(--Colors-Neutral-black, #0d0d0d);
+  color: var(--color-nuetral-black);
   font-family: "Vert Grotesk Display", "Urbanist";
   font-size: 26px;
   font-style: normal;
@@ -1920,7 +1929,7 @@ body.modal-open {
   display: block;
 }
 .testimonial-content h3 {
-  color: var(--Colors-Neutral-black, #0d0d0d);
+  color: var(--color-nuetral-black);
   font-family: Urbanist;
   font-size: 24px;
   font-style: normal;
@@ -1943,7 +1952,7 @@ body.modal-open {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--Colors-Neutral-100, #e1e3e8);
+  background: var(--color-neutral-100);
   flex-shrink: 0;
 }
 
@@ -2183,7 +2192,7 @@ body.modal-open {
 }
 
 .resources-heading p {
-  color: var(--Colors-Neutral-800, #4d545c);
+  color: var(--color-neutral-800);
   font-size: 18px;
   font-weight: 400;
   line-height: 160%;
@@ -2509,7 +2518,7 @@ body.modal-open {
   display: flex;
   gap: 6px;
   align-items: flex-start;
-  color: var(--Colors-Neutral-700, #535a61);
+  color: var(--color-neutral-700);
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
@@ -2786,7 +2795,7 @@ body.modal-open {
   }
 
   .sticky-product-title {
-    color: var(--Colors-Secondary-500-main, #111827);
+    color: var(--color-secondary-500-main);
     font-size: 16px;
     line-height: 140%;
     white-space: normal;
@@ -2798,7 +2807,7 @@ body.modal-open {
   }
 
   .sticky-product-price {
-    color: var(--Colors-Neutral-black, #0d0d0d);
+    color: var(--color-nuetral-black);
     font-size: 16px;
     line-height: 140%;
     letter-spacing: -0.096px;
@@ -3122,3 +3131,4 @@ body.modal-open {
     gap: 16px;
   }
 }
+
