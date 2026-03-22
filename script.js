@@ -555,34 +555,88 @@ function initQuotePopup() {
 // ================= FAQ TOGGLE =================
 function handleFAQ() {
   const faqItems = document.querySelectorAll(".faq-item");
-  
+
+  const setExpandedState = (item, expand) => {
+    const answer = item.querySelector(".faq-answer");
+    const toggle = item.querySelector(".faq-toggle");
+    if (!answer || !toggle) return;
+
+    if (expand) {
+      item.classList.add("faq-item-expanded");
+      answer.style.height = "auto";
+      const fullHeight = answer.scrollHeight;
+      answer.style.height = "0px";
+      void answer.offsetHeight;
+      answer.style.height = `${fullHeight}px`;
+      toggle.setAttribute("aria-expanded", "true");
+      return;
+    }
+
+    answer.style.height = `${answer.scrollHeight}px`;
+    void answer.offsetHeight;
+    item.classList.remove("faq-item-expanded");
+    answer.style.height = "0px";
+    toggle.setAttribute("aria-expanded", "false");
+  };
+
   faqItems.forEach((item) => {
     const header = item.querySelector(".faq-header");
     const toggle = item.querySelector(".faq-toggle");
-    
+    const answer = item.querySelector(".faq-answer");
+
     if (!header || !toggle) return;
+
+    if (answer) {
+      const answerId = answer.id || `faq-answer-${Math.random().toString(36).slice(2, 8)}`;
+      answer.id = answerId;
+      toggle.setAttribute("aria-controls", answerId);
+
+      answer.addEventListener("transitionend", (event) => {
+        if (event.propertyName !== "height") return;
+        if (item.classList.contains("faq-item-expanded")) {
+          answer.style.height = "auto";
+        }
+      });
+    }
+
+    toggle.setAttribute(
+      "aria-expanded",
+      item.classList.contains("faq-item-expanded") ? "true" : "false"
+    );
 
     const handleToggle = () => {
       const isExpanded = item.classList.contains("faq-item-expanded");
-      
+
       // Close all other items
       faqItems.forEach((otherItem) => {
         if (otherItem !== item && otherItem.classList.contains("faq-item-expanded")) {
-          otherItem.classList.remove("faq-item-expanded");
-          const btn = otherItem.querySelector(".faq-toggle");
-          if (btn) btn.setAttribute("aria-expanded", "false");
+          setExpandedState(otherItem, false);
         }
       });
 
       // Toggle current item
-      item.classList.toggle("faq-item-expanded");
-      toggle.setAttribute("aria-expanded", !isExpanded);
+      setExpandedState(item, !isExpanded);
     };
 
     header.addEventListener("click", handleToggle);
     toggle.addEventListener("click", (e) => {
       e.stopPropagation();
       handleToggle();
+    });
+
+    if (item.classList.contains("faq-item-expanded") && answer) {
+      answer.style.height = "auto";
+    } else if (answer) {
+      answer.style.height = "0px";
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    faqItems.forEach((item) => {
+      if (!item.classList.contains("faq-item-expanded")) return;
+      const answer = item.querySelector(".faq-answer");
+      if (!answer) return;
+      answer.style.height = "auto";
     });
   });
 }
