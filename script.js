@@ -123,7 +123,7 @@ function initInfiniteAutoCarousel({
   offsetRatio,
   prevSelector,
   nextSelector,
-  autoSlideInterval = 1600,
+  autoSlideInterval = 3000,
   resumeDelay,
 }) {
   const carousel = document.querySelector(carouselSelector);
@@ -174,7 +174,15 @@ function initInfiniteAutoCarousel({
   const getOffset = () => {
     const firstCard = track.querySelector(cardSelector);
     if (!firstCard) return 0;
-    return firstCard.getBoundingClientRect().width * offsetRatio;
+
+    const cardWidth = firstCard.getBoundingClientRect().width;
+    const isMobileViewport = window.matchMedia("(max-width: 800px)").matches;
+
+    if (isMobileViewport) {
+      return Math.max(0, (carousel.clientWidth - cardWidth) / 2);
+    }
+
+    return cardWidth * offsetRatio;
   };
 
   const setPosition = (withTransition = true) => {
@@ -270,7 +278,7 @@ function initCarousel() {
     offsetRatio: 0.34,
     prevSelector: ".app-control-prev",
     nextSelector: ".app-control-next",
-    autoSlideInterval: 1600,
+    autoSlideInterval: 3000,
     resumeDelay: 4500,
   });
 }
@@ -446,7 +454,7 @@ function initTestimonialsCarousel() {
     trackSelector: ".testimonials-track",
     cardSelector: ".testimonial-card",
     offsetRatio: 0.36,
-    autoSlideInterval: 1600,
+    autoSlideInterval: 3000,
   });
 }
 
