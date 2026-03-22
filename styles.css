@@ -28,6 +28,7 @@
 }
 
 html {
+  scroll-behavior: smooth;
   scroll-padding-top: calc(
     var(--header-height, 84px) + var(--sticky-strip-height, 0px) + 8px
   );
@@ -165,7 +166,7 @@ h2 {
   left: 0;
   right: 0;
   z-index: 999;
-  padding: 16px var(--padding-x);
+  padding: 20px var(--padding-x);
   background: #fff;
   border-bottom: 1px solid var(--color-neutral-100);
   opacity: 0;
@@ -468,8 +469,16 @@ body.has-sticky-strip .sticky-product-bar {
   gap: 20px;
   align-self: stretch;
   width: var(--hero-image-size);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   justify-content: space-between;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.thumbnail-container::-webkit-scrollbar {
+  display: none;
 }
 
 .thumbnail {
