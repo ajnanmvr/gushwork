@@ -2685,7 +2685,6 @@ body.has-sticky-strip .sticky-product-bar {
     border-top: 1px solid #e1e3e8;
     padding-top: 16px;
   }
-
   .resource-item:nth-child(1) {
     border-top: none;
     padding-top: 0;
@@ -2697,5 +2696,19 @@ body.has-sticky-strip .sticky-product-bar {
   }
   .cta-form {
     padding: 20px;
+  }
+  .footer-brand-card {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    text-align: center;
+  }
+  .footer-logo {
+    width: 87.2px;
+    height: 32px;
+  }
+  .footer-tagline,
+  .footer-tagline * {
+    font-size: 16px;
   }
 }
