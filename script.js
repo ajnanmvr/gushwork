@@ -2,11 +2,16 @@
 function handleStickyHeader() {
   const header = document.querySelector(".header");
   const stickyProductBar = document.querySelector(".sticky-product-bar");
+  const heroSection = document.querySelector(".hero");
   if (!header) return;
 
   const root = document.documentElement;
   let lastScrollY = window.scrollY;
   let isTicking = false;
+  let wasPastHero = false;
+  let isPastHeroLocked = false;
+  let directionTravel = 0;
+  const toggleDistance = 28;
 
   const setHeaderHeight = () => {
     root.style.setProperty("--header-height", `${header.offsetHeight}px`);
@@ -19,40 +24,73 @@ function handleStickyHeader() {
     }
   };
 
-  const updateStickyState = (scrollY) => {
-    const threshold = window.innerHeight;
-    const isBeyondFirstFold = scrollY > threshold;
-    const isScrollingDown = scrollY > lastScrollY + 2;
-    const isScrollingUp = scrollY < lastScrollY - 2;
+  const hideHeaderImmediately = () => {
+    header.classList.add("sticky-no-transition", "sticky-hidden");
+    header.classList.remove("sticky-visible");
+    document.body.classList.remove("has-sticky-header");
 
-    if (!isBeyondFirstFold) {
+    // Re-enable transitions on the next paint for normal behavior afterwards.
+    window.requestAnimationFrame(() => {
+      header.classList.remove("sticky-no-transition");
+    });
+  };
+
+  const updateStickyState = (scrollY) => {
+    const heroBottom = heroSection
+      ? heroSection.offsetTop + heroSection.offsetHeight
+      : window.innerHeight;
+    const boundaryBuffer = 14;
+
+    if (!isPastHeroLocked && scrollY > heroBottom + boundaryBuffer) {
+      isPastHeroLocked = true;
+    } else if (isPastHeroLocked && scrollY < heroBottom - boundaryBuffer) {
+      isPastHeroLocked = false;
+    }
+
+    const isPastHero = isPastHeroLocked;
+    const justEnteredPastHero = isPastHero && !wasPastHero;
+    const scrollDelta = scrollY - lastScrollY;
+
+    if (!isPastHero) {
       document.body.classList.remove("has-sticky-header");
       document.body.classList.remove("has-sticky-strip");
       header.classList.remove("sticky-active", "sticky-visible", "sticky-hidden");
+      directionTravel = 0;
       lastScrollY = scrollY;
+      wasPastHero = false;
       return;
     }
 
-    document.body.classList.add("has-sticky-header");
+    document.body.classList.add("has-sticky-strip");
     header.classList.add("sticky-active");
 
-    if (isScrollingDown) {
-      header.classList.add("sticky-visible");
-      header.classList.remove("sticky-hidden");
-      document.body.classList.add("has-sticky-strip");
-    } else if (isScrollingUp) {
-      header.classList.add("sticky-hidden");
-      header.classList.remove("sticky-visible");
-      document.body.classList.remove("has-sticky-strip");
-    } else if (
-      !header.classList.contains("sticky-visible") &&
-      !header.classList.contains("sticky-hidden")
-    ) {
-      header.classList.add("sticky-visible");
-      document.body.classList.add("has-sticky-strip");
+    if (justEnteredPastHero) {
+      hideHeaderImmediately();
+      directionTravel = 0;
+    } else if (Math.abs(scrollDelta) > 1) {
+      if (scrollDelta > 0) {
+        directionTravel = Math.max(0, directionTravel) + scrollDelta;
+
+        if (directionTravel >= toggleDistance) {
+          header.classList.add("sticky-hidden");
+          header.classList.remove("sticky-visible");
+          document.body.classList.remove("has-sticky-header");
+          directionTravel = 0;
+        }
+      } else {
+        directionTravel = Math.min(0, directionTravel) + scrollDelta;
+
+        if (directionTravel <= -toggleDistance) {
+          header.classList.add("sticky-visible");
+          header.classList.remove("sticky-hidden");
+          document.body.classList.add("has-sticky-header");
+          directionTravel = 0;
+        }
+      }
     }
 
     lastScrollY = scrollY;
+    wasPastHero = true;
   };
 
   const onScroll = () => {
@@ -423,20 +461,6 @@ function initTestimonialsCarousel() {
     window.clearInterval(autoSlideTimer);
     autoSlideTimer = null;
   };
-
-  // Over testimonials, wheel should scroll the page only (not the carousel cards).
-  carousel.addEventListener(
-    "wheel",
-    (event) => {
-      event.preventDefault();
-      window.scrollBy({
-        top: event.deltaY,
-        left: 0,
-        behavior: "auto",
-      });
-    },
-    { passive: false }
-  );
 
   carousel.addEventListener("mouseenter", stopAutoSlide);
   carousel.addEventListener("mouseleave", startAutoSlide);
