@@ -18,7 +18,7 @@
   </head>
 
   <body>
-    <header class="header" style="display: none">
+    <header class="header">
       <div class="container">
         <img
           src="assets/images/logo.png"
@@ -43,7 +43,7 @@
       </div>
     </header>
 
-    <aside class="sticky-product-bar" style="display: none">
+    <aside class="sticky-product-bar">
       <div class="container sticky-product-content">
         <div class="sticky-product-meta">
           <img
@@ -388,7 +388,12 @@
               </div>
             </div>
           </div>
-          <button class="features-cta body-16-med quote-modal-trigger" type="button">Request a Quote</button>
+          <button
+            class="features-cta body-16-med quote-modal-trigger"
+            type="button"
+          >
+            Request a Quote
+          </button>
         </div>
       </section>
 
@@ -1128,8 +1133,12 @@
               class="footer-logo"
             />
             <p class="footer-tagline">
-              Premium <span>HDPE Pipes & Fittings <br> Manufacturer</span> in South
-              India
+              Premium
+              <span
+                >HDPE Pipes & Fittings <br />
+                Manufacturer</span
+              >
+              in South India
             </p>
           </div>
 
@@ -1218,25 +1227,53 @@
 
     <div class="modals-root" aria-hidden="false">
       <div class="datasheet-modal" aria-hidden="true">
-        <div class="datasheet-modal-panel" role="dialog" aria-modal="true" aria-labelledby="datasheet-modal-title">
+        <div
+          class="datasheet-modal-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="datasheet-modal-title"
+        >
           <div class="datasheet-modal-header">
-            <h3 id="datasheet-modal-title">Let us email the entire catalogue to you</h3>
-            <button type="button" class="datasheet-modal-close" aria-label="Close popup">&times;</button>
+            <h3 id="datasheet-modal-title">
+              Let us email the entire catalogue to you
+            </h3>
+            <button
+              type="button"
+              class="datasheet-modal-close"
+              aria-label="Close popup"
+            >
+              &times;
+            </button>
           </div>
 
           <form class="datasheet-modal-form" action="#" method="post">
             <div class="datasheet-modal-field">
               <label for="datasheet-email">Your Email <span>*</span></label>
-              <input id="datasheet-email" name="email" type="email" placeholder="example@gmail.com" required />
+              <input
+                id="datasheet-email"
+                name="email"
+                type="email"
+                placeholder="example@gmail.com"
+                required
+              />
             </div>
 
             <div class="datasheet-modal-field">
               <label for="datasheet-contact">Your Contact (Optional)</label>
-              <input id="datasheet-contact" name="contact" type="tel" placeholder="+91-0000000000" />
+              <input
+                id="datasheet-contact"
+                name="contact"
+                type="tel"
+                placeholder="+91-0000000000"
+              />
             </div>
 
             <div class="datasheet-modal-actions">
-              <button type="submit" class="datasheet-submit-btn body-14-med" disabled>
+              <button
+                type="submit"
+                class="datasheet-submit-btn body-14-med"
+                disabled
+              >
                 Download Brochure
               </button>
             </div>
@@ -1245,27 +1282,64 @@
       </div>
 
       <div class="quote-modal" aria-hidden="true">
-        <div class="quote-modal-panel" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
+        <div
+          class="quote-modal-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="quote-modal-title"
+        >
           <div class="quote-modal-header">
             <h3 id="quote-modal-title">Request a call back</h3>
-            <button type="button" class="quote-modal-close" aria-label="Close popup">&times;</button>
+            <button
+              type="button"
+              class="quote-modal-close"
+              aria-label="Close popup"
+            >
+              &times;
+            </button>
           </div>
 
           <form class="quote-modal-form" action="#" method="post">
-            <input type="text" name="fullName" placeholder="Full Name" aria-label="Full Name" />
-            <input type="text" name="companyName" placeholder="Company Name" aria-label="Company Name" />
-            <input type="email" name="email" placeholder="Email Address" aria-label="Email Address" />
+            <input
+              type="text"
+              name="fullName"
+              placeholder="Full Name"
+              aria-label="Full Name"
+            />
+            <input
+              type="text"
+              name="companyName"
+              placeholder="Company Name"
+              aria-label="Company Name"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              aria-label="Email Address"
+            />
 
             <div class="quote-phone-field">
-              <button type="button" class="quote-country-code body-14-reg" aria-label="Country code">
+              <button
+                type="button"
+                class="quote-country-code body-14-reg"
+                aria-label="Country code"
+              >
                 +91
                 <img src="assets/icons/caret-down.svg" alt="" />
               </button>
-              <input type="tel" name="phone" placeholder="7003026616" aria-label="Phone number" />
+              <input
+                type="tel"
+                name="phone"
+                placeholder="7003026616"
+                aria-label="Phone number"
+              />
             </div>
 
             <div class="quote-modal-actions">
-              <button type="submit" class="quote-submit-btn body-14-med">Submit Form</button>
+              <button type="submit" class="quote-submit-btn body-14-med">
+                Submit Form
+              </button>
             </div>
           </form>
         </div>

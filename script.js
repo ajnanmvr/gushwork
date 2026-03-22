@@ -108,6 +108,8 @@ function initCarousel() {
 
   let currentIndex = cloneCount;
   let isAnimating = false;
+  let autoSlideTimer;
+  let resumeAutoSlideTimeout;
 
   const getCardStep = () => {
     const firstCard = track.querySelector(".application-card");
@@ -161,14 +163,50 @@ function initCarousel() {
     isAnimating = false;
   });
 
-  prevBtn.addEventListener("click", () => goTo(-1));
-  nextBtn.addEventListener("click", () => goTo(1));
+  const startAutoSlide = () => {
+    if (autoSlideTimer) window.clearInterval(autoSlideTimer);
+    autoSlideTimer = window.setInterval(() => {
+      goTo(1);
+    }, 1600);
+  };
+
+  const stopAutoSlide = () => {
+    if (!autoSlideTimer) return;
+    window.clearInterval(autoSlideTimer);
+    autoSlideTimer = null;
+  };
+
+  const resumeAutoSlideAfterDelay = () => {
+    if (resumeAutoSlideTimeout) window.clearTimeout(resumeAutoSlideTimeout);
+
+    resumeAutoSlideTimeout = window.setTimeout(() => {
+      if (!carousel.matches(":hover")) {
+        startAutoSlide();
+      }
+    }, 4500);
+  };
+
+  prevBtn.addEventListener("click", () => {
+    stopAutoSlide();
+    goTo(-1);
+    resumeAutoSlideAfterDelay();
+  });
+
+  nextBtn.addEventListener("click", () => {
+    stopAutoSlide();
+    goTo(1);
+    resumeAutoSlideAfterDelay();
+  });
+
+  carousel.addEventListener("mouseenter", stopAutoSlide);
+  carousel.addEventListener("mouseleave", startAutoSlide);
 
   prevBtn.disabled = false;
   nextBtn.disabled = false;
 
   window.addEventListener("resize", () => setPosition(false));
   setPosition(false);
+  startAutoSlide();
 }
 
 // ================= IMAGE ZOOM =================
@@ -319,7 +357,7 @@ function initTestimonialsCarousel() {
 
   let currentIndex = cloneCount;
   let isAnimating = false;
-  let wheelTimeout;
+  let autoSlideTimer;
 
   const getCardStep = () => {
     const firstCard = track.querySelector(".testimonial-card");
@@ -336,8 +374,8 @@ function initTestimonialsCarousel() {
     const firstCard = track.querySelector(".testimonial-card");
     if (!firstCard) return 0;
 
-    // Keep the first visible card 34% cut off on the left
-    return firstCard.getBoundingClientRect().width * 0.9;
+    // Keep the first card partially visible on the left.
+    return firstCard.getBoundingClientRect().width * 0.36;
   };
 
   const setPosition = (withTransition = true) => {
@@ -348,7 +386,7 @@ function initTestimonialsCarousel() {
     track.style.transform = `translateX(${-(currentIndex * step + startOffset)}px)`;
   };
 
-  const scroll = (direction) => {
+  const goTo = (direction) => {
     if (isAnimating) return;
 
     isAnimating = true;
@@ -373,24 +411,39 @@ function initTestimonialsCarousel() {
     isAnimating = false;
   });
 
-  // Mouse wheel scroll
-  carousel.addEventListener("wheel", (e) => {
-    e.preventDefault();
+  const startAutoSlide = () => {
+    if (autoSlideTimer) window.clearInterval(autoSlideTimer);
+    autoSlideTimer = window.setInterval(() => {
+      goTo(1);
+    }, 1600);
+  };
 
-    clearTimeout(wheelTimeout);
+  const stopAutoSlide = () => {
+    if (!autoSlideTimer) return;
+    window.clearInterval(autoSlideTimer);
+    autoSlideTimer = null;
+  };
 
-    // Determine scroll direction
-    const direction = e.deltaY > 0 ? 1 : -1;
-    scroll(direction);
+  // Over testimonials, wheel should scroll the page only (not the carousel cards).
+  carousel.addEventListener(
+    "wheel",
+    (event) => {
+      event.preventDefault();
+      window.scrollBy({
+        top: event.deltaY,
+        left: 0,
+        behavior: "auto",
+      });
+    },
+    { passive: false }
+  );
 
-    // Reset animation flag after timeout to allow another scroll
-    wheelTimeout = setTimeout(() => {
-      isAnimating = false;
-    }, 50);
-  }, { passive: false });
+  carousel.addEventListener("mouseenter", stopAutoSlide);
+  carousel.addEventListener("mouseleave", startAutoSlide);
 
   window.addEventListener("resize", () => setPosition(false));
   setPosition(false);
+  startAutoSlide();
 }
 
 // ================= MODALS & POPUPS =================
