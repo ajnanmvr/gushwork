@@ -366,7 +366,8 @@ body.has-sticky-strip .sticky-product-bar {
   align-items: center;
   gap: 8px;
   position: absolute;
-  top: 32px;
+  top: -48px;
+  transform: translateY(-100%);
 }
 .breadcrumbs a {
   text-decoration: none;
@@ -2837,6 +2838,10 @@ body.modal-open {
   }
   .hero {
     padding-top: 80px;
+  }
+  .breadcrumbs {
+    top: -28px;
+    left: 0;
   }
   .brands .logo-container img:nth-child(4) {
     display: none;
