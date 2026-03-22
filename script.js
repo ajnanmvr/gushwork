@@ -11,7 +11,8 @@ function handleStickyHeader() {
   let wasPastHero = false;
   let isPastHeroLocked = false;
   let directionTravel = 0;
-  const toggleDistance = 28;
+  const hideToggleDistance = 24;
+  const showToggleDistance = 8;
 
   const setHeaderHeight = () => {
     root.style.setProperty("--header-height", `${header.offsetHeight}px`);
@@ -39,11 +40,12 @@ function handleStickyHeader() {
     const heroBottom = heroSection
       ? heroSection.offsetTop + heroSection.offsetHeight
       : window.innerHeight;
-    const boundaryBuffer = 14;
+    const enterBuffer = 2;
+    const exitBuffer = 10;
 
-    if (!isPastHeroLocked && scrollY > heroBottom + boundaryBuffer) {
+    if (!isPastHeroLocked && scrollY > heroBottom + enterBuffer) {
       isPastHeroLocked = true;
-    } else if (isPastHeroLocked && scrollY < heroBottom - boundaryBuffer) {
+    } else if (isPastHeroLocked && scrollY < heroBottom - exitBuffer) {
       isPastHeroLocked = false;
     }
 
@@ -71,7 +73,7 @@ function handleStickyHeader() {
       if (scrollDelta > 0) {
         directionTravel = Math.max(0, directionTravel) + scrollDelta;
 
-        if (directionTravel >= toggleDistance) {
+        if (directionTravel >= hideToggleDistance) {
           header.classList.add("sticky-hidden");
           header.classList.remove("sticky-visible");
           document.body.classList.remove("has-sticky-header");
@@ -80,7 +82,7 @@ function handleStickyHeader() {
       } else {
         directionTravel = Math.min(0, directionTravel) + scrollDelta;
 
-        if (directionTravel <= -toggleDistance) {
+        if (directionTravel <= -showToggleDistance) {
           header.classList.add("sticky-visible");
           header.classList.remove("sticky-hidden");
           document.body.classList.add("has-sticky-header");
@@ -114,25 +116,34 @@ function handleStickyHeader() {
 }
 
 // ================= CAROUSEL =================
-function initCarousel() {
-  const carousel = document.querySelector(".applications-carousel");
-  const track = document.querySelector(".applications-track");
-  const prevBtn = document.querySelector(".app-control-prev");
-  const nextBtn = document.querySelector(".app-control-next");
+function initInfiniteAutoCarousel({
+  carouselSelector,
+  trackSelector,
+  cardSelector,
+  offsetRatio,
+  prevSelector,
+  nextSelector,
+  autoSlideInterval = 1600,
+  resumeDelay,
+}) {
+  const carousel = document.querySelector(carouselSelector);
+  const track = document.querySelector(trackSelector);
+  const prevBtn = prevSelector ? document.querySelector(prevSelector) : null;
+  const nextBtn = nextSelector ? document.querySelector(nextSelector) : null;
 
-  if (!carousel || !track || !prevBtn || !nextBtn) return;
+  if (!carousel || !track) return;
+  if ((prevSelector && !prevBtn) || (nextSelector && !nextBtn)) return;
 
-  const originalSlides = Array.from(track.querySelectorAll(".application-card"));
-  if (originalSlides.length < 2) return;
+  const originalCards = Array.from(track.querySelectorAll(cardSelector));
+  if (originalCards.length < 2) return;
 
-  // Clone the full set on both sides so wide viewports + half-card offset never reveal gaps.
-  const cloneCount = originalSlides.length;
-  const headClones = originalSlides
+  const cloneCount = originalCards.length;
+  const headClones = originalCards
     .slice(-cloneCount)
-    .map((slide) => slide.cloneNode(true));
-  const tailClones = originalSlides
+    .map((card) => card.cloneNode(true));
+  const tailClones = originalCards
     .slice(0, cloneCount)
-    .map((slide) => slide.cloneNode(true));
+    .map((card) => card.cloneNode(true));
 
   headClones.forEach((clone) => {
     clone.setAttribute("aria-hidden", "true");
@@ -150,7 +161,7 @@ function initCarousel() {
   let resumeAutoSlideTimeout;
 
   const getCardStep = () => {
-    const firstCard = track.querySelector(".application-card");
+    const firstCard = track.querySelector(cardSelector);
     if (!firstCard) return 0;
 
     const trackStyles = window.getComputedStyle(track);
@@ -161,11 +172,9 @@ function initCarousel() {
   };
 
   const getOffset = () => {
-    const firstCard = track.querySelector(".application-card");
+    const firstCard = track.querySelector(cardSelector);
     if (!firstCard) return 0;
-
-    // Keep the first visible card half cut off on the left.
-    return firstCard.getBoundingClientRect().width * 0.34;
+    return firstCard.getBoundingClientRect().width * offsetRatio;
   };
 
   const setPosition = (withTransition = true) => {
@@ -185,7 +194,7 @@ function initCarousel() {
   };
 
   track.addEventListener("transitionend", () => {
-    const totalOriginal = originalSlides.length;
+    const totalOriginal = originalCards.length;
 
     if (currentIndex >= totalOriginal + cloneCount) {
       currentIndex = cloneCount;
@@ -195,7 +204,6 @@ function initCarousel() {
       setPosition(false);
     }
 
-    // Force reflow before restoring transition for next click.
     track.getBoundingClientRect();
     track.style.transition = "transform 0.35s ease";
     isAnimating = false;
@@ -205,7 +213,7 @@ function initCarousel() {
     if (autoSlideTimer) window.clearInterval(autoSlideTimer);
     autoSlideTimer = window.setInterval(() => {
       goTo(1);
-    }, 1600);
+    }, autoSlideInterval);
   };
 
   const stopAutoSlide = () => {
@@ -215,36 +223,56 @@ function initCarousel() {
   };
 
   const resumeAutoSlideAfterDelay = () => {
+    if (!resumeDelay) {
+      startAutoSlide();
+      return;
+    }
+
     if (resumeAutoSlideTimeout) window.clearTimeout(resumeAutoSlideTimeout);
 
     resumeAutoSlideTimeout = window.setTimeout(() => {
       if (!carousel.matches(":hover")) {
         startAutoSlide();
       }
-    }, 4500);
+    }, resumeDelay);
   };
 
-  prevBtn.addEventListener("click", () => {
-    stopAutoSlide();
-    goTo(-1);
-    resumeAutoSlideAfterDelay();
-  });
+  if (prevBtn && nextBtn) {
+    prevBtn.addEventListener("click", () => {
+      stopAutoSlide();
+      goTo(-1);
+      resumeAutoSlideAfterDelay();
+    });
 
-  nextBtn.addEventListener("click", () => {
-    stopAutoSlide();
-    goTo(1);
-    resumeAutoSlideAfterDelay();
-  });
+    nextBtn.addEventListener("click", () => {
+      stopAutoSlide();
+      goTo(1);
+      resumeAutoSlideAfterDelay();
+    });
+
+    prevBtn.disabled = false;
+    nextBtn.disabled = false;
+  }
 
   carousel.addEventListener("mouseenter", stopAutoSlide);
   carousel.addEventListener("mouseleave", startAutoSlide);
 
-  prevBtn.disabled = false;
-  nextBtn.disabled = false;
-
   window.addEventListener("resize", () => setPosition(false));
   setPosition(false);
   startAutoSlide();
+}
+
+function initCarousel() {
+  initInfiniteAutoCarousel({
+    carouselSelector: ".applications-carousel",
+    trackSelector: ".applications-track",
+    cardSelector: ".application-card",
+    offsetRatio: 0.34,
+    prevSelector: ".app-control-prev",
+    nextSelector: ".app-control-next",
+    autoSlideInterval: 1600,
+    resumeDelay: 4500,
+  });
 }
 
 // ================= IMAGE ZOOM =================
@@ -366,108 +394,13 @@ function initProcessSteps() {
 
 // ================= TESTIMONIALS CAROUSEL =================
 function initTestimonialsCarousel() {
-  const carousel = document.querySelector(".testimonials-carousel");
-  const track = document.querySelector(".testimonials-track");
-
-  if (!carousel || !track) return;
-
-  const originalCards = Array.from(track.querySelectorAll(".testimonial-card"));
-  if (originalCards.length < 2) return;
-
-  // Clone the full set on both sides for infinite scroll
-  const cloneCount = originalCards.length;
-  const headClones = originalCards
-    .slice(-cloneCount)
-    .map((card) => card.cloneNode(true));
-  const tailClones = originalCards
-    .slice(0, cloneCount)
-    .map((card) => card.cloneNode(true));
-
-  headClones.forEach((clone) => {
-    clone.setAttribute("aria-hidden", "true");
-    track.insertBefore(clone, track.firstChild);
+  initInfiniteAutoCarousel({
+    carouselSelector: ".testimonials-carousel",
+    trackSelector: ".testimonials-track",
+    cardSelector: ".testimonial-card",
+    offsetRatio: 0.36,
+    autoSlideInterval: 1600,
   });
-
-  tailClones.forEach((clone) => {
-    clone.setAttribute("aria-hidden", "true");
-    track.appendChild(clone);
-  });
-
-  let currentIndex = cloneCount;
-  let isAnimating = false;
-  let autoSlideTimer;
-
-  const getCardStep = () => {
-    const firstCard = track.querySelector(".testimonial-card");
-    if (!firstCard) return 0;
-
-    const trackStyles = window.getComputedStyle(track);
-    const cardWidth = firstCard.getBoundingClientRect().width;
-    const gap = parseFloat(trackStyles.gap || "0");
-
-    return cardWidth + gap;
-  };
-
-  const getOffset = () => {
-    const firstCard = track.querySelector(".testimonial-card");
-    if (!firstCard) return 0;
-
-    // Keep the first card partially visible on the left.
-    return firstCard.getBoundingClientRect().width * 0.36;
-  };
-
-  const setPosition = (withTransition = true) => {
-    const step = getCardStep();
-    const startOffset = getOffset();
-
-    track.style.transition = withTransition ? "transform 0.35s ease" : "none";
-    track.style.transform = `translateX(${-(currentIndex * step + startOffset)}px)`;
-  };
-
-  const goTo = (direction) => {
-    if (isAnimating) return;
-
-    isAnimating = true;
-    currentIndex += direction;
-    setPosition(true);
-  };
-
-  track.addEventListener("transitionend", () => {
-    const totalOriginal = originalCards.length;
-
-    if (currentIndex >= totalOriginal + cloneCount) {
-      currentIndex = cloneCount;
-      setPosition(false);
-    } else if (currentIndex < cloneCount) {
-      currentIndex = totalOriginal + cloneCount - 1;
-      setPosition(false);
-    }
-
-    // Force reflow before restoring transition for next scroll
-    track.getBoundingClientRect();
-    track.style.transition = "transform 0.35s ease";
-    isAnimating = false;
-  });
-
-  const startAutoSlide = () => {
-    if (autoSlideTimer) window.clearInterval(autoSlideTimer);
-    autoSlideTimer = window.setInterval(() => {
-      goTo(1);
-    }, 1600);
-  };
-
-  const stopAutoSlide = () => {
-    if (!autoSlideTimer) return;
-    window.clearInterval(autoSlideTimer);
-    autoSlideTimer = null;
-  };
-
-  carousel.addEventListener("mouseenter", stopAutoSlide);
-  carousel.addEventListener("mouseleave", startAutoSlide);
-
-  window.addEventListener("resize", () => setPosition(false));
-  setPosition(false);
-  startAutoSlide();
 }
 
 // ================= MODALS & POPUPS =================
