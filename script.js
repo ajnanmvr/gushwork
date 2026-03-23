@@ -123,7 +123,7 @@ function initInfiniteAutoCarousel({
   offsetRatio,
   prevSelector,
   nextSelector,
-  autoSlideInterval = 3000,
+  autoSlideInterval = 2000,
   resumeDelay,
 }) {
   const carousel = document.querySelector(carouselSelector);
@@ -157,6 +157,7 @@ function initInfiniteAutoCarousel({
 
   let currentIndex = cloneCount;
   let isAnimating = false;
+  let hasPlayedInitialSlide = false;
   let autoSlideTimer;
   let resumeAutoSlideTimeout;
 
@@ -199,6 +200,13 @@ function initInfiniteAutoCarousel({
     isAnimating = true;
     currentIndex += direction;
     setPosition(true);
+  };
+
+  const playInitialSlide = () => {
+    if (hasPlayedInitialSlide) return;
+
+    hasPlayedInitialSlide = true;
+    goTo(1);
   };
 
   track.addEventListener("transitionend", () => {
@@ -267,7 +275,10 @@ function initInfiniteAutoCarousel({
 
   window.addEventListener("resize", () => setPosition(false));
   setPosition(false);
-  startAutoSlide();
+  window.requestAnimationFrame(() => {
+    playInitialSlide();
+    startAutoSlide();
+  });
 }
 
 function initCarousel() {
@@ -278,8 +289,7 @@ function initCarousel() {
     offsetRatio: 0.34,
     prevSelector: ".app-control-prev",
     nextSelector: ".app-control-next",
-    autoSlideInterval: 3000,
-    resumeDelay: 4500,
+    autoSlideInterval: 2000,
   });
 }
 
@@ -454,7 +464,7 @@ function initTestimonialsCarousel() {
     trackSelector: ".testimonials-track",
     cardSelector: ".testimonial-card",
     offsetRatio: 0.36,
-    autoSlideInterval: 3000,
+    autoSlideInterval: 2000,
   });
 }
 
