@@ -2795,7 +2795,6 @@ body.modal-open {
   }
 
   .sticky-product-meta {
-    align-items: flex-start;
     gap: 16px;
     flex: 1 0 0;
   }
@@ -2876,6 +2875,7 @@ body.modal-open {
   .hero .product {
     display: flex;
     flex-direction: column;
+    align-items: start;
     gap: 24px;
   }
 
