@@ -451,7 +451,7 @@ body.has-sticky-strip .sticky-product-bar {
 }
 
 .hero-image {
-  height: var(--hero-image-size);
+  width: var(--hero-image-size);
   aspect-ratio: 1/1;
   object-fit: cover;
   border-radius: 24px;
@@ -2868,6 +2868,10 @@ body.modal-open {
   }
   .hero {
     padding-top: 80px;
+  }
+  .hero-image,.thumbnail-container{
+    min-width: var(--hero-image-size);
+    width:91vw ;
   }
   .breadcrumbs {
     top: -28px;
