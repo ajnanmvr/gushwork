@@ -1756,7 +1756,6 @@ body.modal-open {
   position: relative;
   flex: 1;
   aspect-ratio: 16 / 9;
-  border: 3px solid #fff;
   border-radius: 16px;
   overflow: hidden;
 }
@@ -2067,7 +2066,8 @@ body.modal-open {
 }
 
 .portfolio-card-media {
-  height: 174.667px;
+  width: 100%;
+  min-width: 349.334px;
   align-self: stretch;
   aspect-ratio: 2/1;
   overflow: hidden;
@@ -2647,8 +2647,7 @@ body.modal-open {
     padding: 8px 0px;
   }
   .portfolio-card-media {
-    width: 282.667px;
-    height: 141.333px;
+    min-width: 282.667px;
   }
 }
 
@@ -2670,9 +2669,7 @@ body.modal-open {
     padding: 8px 16px;
   }
   .portfolio-card-media {
-    height: 128px;
-    width: auto;
-    align-self: stretch;
+    min-width: 256px;
   }
 }
 
@@ -2765,7 +2762,7 @@ body.modal-open {
     grid-template-columns: 1fr;
   }
   .portfolio-card-media {
-    height: 328px;
+    min-width: 656px;
   }
   .cta-panel {
     flex-direction: column;
@@ -3027,12 +3024,6 @@ body.modal-open {
     padding: 16px;
   }
 
-  .process-media {
-    width: 296px;
-    height: 166.5px;
-    aspect-ratio: 16/9;
-  }
-
   .testimonials-track {
     gap: 16px;
   }
@@ -3054,7 +3045,7 @@ body.modal-open {
     line-height: 20px;
   }
   .portfolio-card-media {
-    height: 140px;
+    min-width: 280px;
   }
   .portfolio-card-btn {
     padding: 8px 24px;
