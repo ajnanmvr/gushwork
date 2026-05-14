@@ -1,4 +1,8 @@
 // ================= STICKY HEADER =================
+/**
+ * Manages the sticky navigation and product strip visibility based on scroll position.
+ * Shows both when scrolling down past the hero section, and only nav when scrolling up.
+ */
 function handleStickyHeader() {
   const header = document.querySelector(".header");
   const stickyProductBar = document.querySelector(".sticky-product-bar");
@@ -20,7 +24,7 @@ function handleStickyHeader() {
     if (stickyProductBar) {
       root.style.setProperty(
         "--sticky-strip-height",
-        `${stickyProductBar.offsetHeight}px`
+        `${stickyProductBar.offsetHeight}px`,
       );
     }
   };
@@ -56,7 +60,11 @@ function handleStickyHeader() {
     if (!isPastHero) {
       document.body.classList.remove("has-sticky-header");
       document.body.classList.remove("has-sticky-strip");
-      header.classList.remove("sticky-active", "sticky-visible", "sticky-hidden");
+      header.classList.remove(
+        "sticky-active",
+        "sticky-visible",
+        "sticky-hidden",
+      );
       directionTravel = 0;
       lastScrollY = scrollY;
       wasPastHero = false;
@@ -72,7 +80,7 @@ function handleStickyHeader() {
       header.classList.remove("sticky-hidden");
       document.body.classList.add("has-sticky-header");
       document.body.classList.add("has-sticky-strip");
-      
+
       window.requestAnimationFrame(() => {
         header.classList.remove("sticky-no-transition");
       });
@@ -128,6 +136,10 @@ function handleStickyHeader() {
 }
 
 // ================= CAROUSEL =================
+/**
+ * Generic carousel initialization function with infinite scrolling and auto-play capabilities.
+ * It automatically clones the first and last few items to create a seamless infinite loop.
+ */
 function initInfiniteAutoCarousel({
   carouselSelector,
   trackSelector,
@@ -293,6 +305,9 @@ function initInfiniteAutoCarousel({
   });
 }
 
+/**
+ * Initializes the specific applications carousel using the generic carousel function.
+ */
 function initCarousel() {
   initInfiniteAutoCarousel({
     carouselSelector: ".applications-carousel",
@@ -306,24 +321,31 @@ function initCarousel() {
 }
 
 // ================= HERO GALLERY =================
+/**
+ * Handles the interactive product image gallery in the hero section.
+ * Updates the main hero image when thumbnails or navigation arrows are clicked.
+ */
 function initHeroGallery() {
   const heroImage = document.querySelector(".hero-image");
   const thumbnailItems = Array.from(
-    document.querySelectorAll(".thumbnail-container .thumbnail")
+    document.querySelectorAll(".thumbnail-container .thumbnail"),
   );
   const prevButton = document.querySelector(
-    ".hero-image-container .slider-controls button:first-child"
+    ".hero-image-container .slider-controls button:first-child",
   );
   const nextButton = document.querySelector(
-    ".hero-image-container .slider-controls button:last-child"
+    ".hero-image-container .slider-controls button:last-child",
   );
 
-  if (!heroImage || !thumbnailItems.length || !prevButton || !nextButton) return;
+  if (!heroImage || !thumbnailItems.length || !prevButton || !nextButton)
+    return;
 
   const imageSources = thumbnailItems
     .map((thumbnail) => {
       if (thumbnail instanceof HTMLImageElement) {
-        return thumbnail.getAttribute("src") || thumbnail.currentSrc || thumbnail.src;
+        return (
+          thumbnail.getAttribute("src") || thumbnail.currentSrc || thumbnail.src
+        );
       }
 
       return thumbnail.getAttribute("data-image");
@@ -343,8 +365,10 @@ function initHeroGallery() {
   const initialIndex = Math.max(
     0,
     imageSources.findIndex(
-      (src) => normalizeUrl(src) === normalizeUrl(heroImage.currentSrc || heroImage.src)
-    )
+      (src) =>
+        normalizeUrl(src) ===
+        normalizeUrl(heroImage.currentSrc || heroImage.src),
+    ),
   );
 
   let currentIndex = initialIndex;
@@ -365,7 +389,10 @@ function initHeroGallery() {
     heroImage.src = imageSources[currentIndex];
 
     const activeThumbnail = thumbnailItems[currentIndex];
-    if (activeThumbnail instanceof HTMLImageElement && activeThumbnail.alt.trim()) {
+    if (
+      activeThumbnail instanceof HTMLImageElement &&
+      activeThumbnail.alt.trim()
+    ) {
       heroImage.alt = activeThumbnail.alt;
     }
 
@@ -404,6 +431,10 @@ function initHeroGallery() {
 }
 
 // ================= IMAGE ZOOM =================
+/**
+ * Implements a magnifying glass zoom effect for the main product hero image.
+ * Shows a zoomed-in overlay when hovering over the image.
+ */
 function handleImageZoom() {
   const container = document.querySelector(".hero-image-container");
   const image = document.querySelector(".hero-image");
@@ -422,7 +453,7 @@ function handleImageZoom() {
 
     const scale = Math.max(
       displayWidth / naturalWidth,
-      displayHeight / naturalHeight
+      displayHeight / naturalHeight,
     );
 
     const renderedWidth = naturalWidth * scale;
@@ -460,11 +491,11 @@ function handleImageZoom() {
 
     const clampedX = Math.max(
       focusHalfWidth,
-      Math.min(x, displayWidth - focusHalfWidth)
+      Math.min(x, displayWidth - focusHalfWidth),
     );
     const clampedY = Math.max(
       focusHalfHeight,
-      Math.min(y, displayHeight - focusHalfHeight)
+      Math.min(y, displayHeight - focusHalfHeight),
     );
 
     focus.style.left = `${clampedX}px`;
@@ -475,7 +506,7 @@ function handleImageZoom() {
 
     const lensTop = Math.max(
       lensHeight / 2,
-      Math.min(clampedY, displayHeight - lensHeight / 2)
+      Math.min(clampedY, displayHeight - lensHeight / 2),
     );
     lens.style.top = `${lensTop}px`;
 
@@ -512,17 +543,24 @@ function handleImageZoom() {
 
   if (image.complete) {
     setLensBackground();
-  } else {
-    image.addEventListener("load", setLensBackground, { once: true });
   }
+
+  // Continuously listen for load events so the lens updates when the carousel changes the image src
+  image.addEventListener("load", setLensBackground);
 }
 
 // ================= PROCESS STEPS =================
+/**
+ * Manages the interactive manufacturing process steps panel.
+ * Handles switching between different steps and updating the active state.
+ */
 function initProcessSteps() {
   const processPanel = document.querySelector(".process-panel");
   if (!processPanel) return;
 
-  const stepButtons = Array.from(processPanel.querySelectorAll(".process-step"));
+  const stepButtons = Array.from(
+    processPanel.querySelectorAll(".process-step"),
+  );
   const stepLabel = processPanel.querySelector(".process-mobile-step-label");
   const prevButton = processPanel.querySelector(".process-mobile-prev");
   const nextButton = processPanel.querySelector(".process-mobile-next");
@@ -531,7 +569,7 @@ function initProcessSteps() {
 
   let currentIndex = Math.max(
     0,
-    stepButtons.findIndex((button) => button.classList.contains("is-active"))
+    stepButtons.findIndex((button) => button.classList.contains("is-active")),
   );
 
   const totalSteps = stepButtons.length;
@@ -568,6 +606,9 @@ function initProcessSteps() {
 }
 
 // ================= TESTIMONIALS CAROUSEL =================
+/**
+ * Initializes the testimonials slider with specific offset and interval settings.
+ */
 function initTestimonialsCarousel() {
   initInfiniteAutoCarousel({
     carouselSelector: ".testimonials-carousel",
@@ -579,6 +620,10 @@ function initTestimonialsCarousel() {
 }
 
 // ================= MODALS & POPUPS =================
+/**
+ * Generic helper function to bind open/close events for modal dialogs.
+ * Includes outside click and Escape key dismissal logic.
+ */
 function bindModal({
   triggerSelector,
   modalSelector,
@@ -625,6 +670,9 @@ function bindModal({
   });
 }
 
+/**
+ * Initializes the datasheet download popup and form validation logic.
+ */
 function initDatasheetPopup() {
   const emailInput = document.querySelector("#datasheet-email");
   const submitButton = document.querySelector(".datasheet-submit-btn");
@@ -656,8 +704,13 @@ function initDatasheetPopup() {
   setSubmitState();
 }
 
+/**
+ * Initializes the custom quote request popup dialog.
+ */
 function initQuotePopup() {
-  const firstInput = document.querySelector('.quote-modal-form input[name="fullName"]');
+  const firstInput = document.querySelector(
+    '.quote-modal-form input[name="fullName"]',
+  );
 
   bindModal({
     triggerSelector: ".quote-modal-trigger",
@@ -673,6 +726,10 @@ function initQuotePopup() {
 }
 
 // ================= FAQ TOGGLE =================
+/**
+ * Handles the accordion behavior for the Frequently Asked Questions section.
+ * Ensures only one FAQ item is fully expanded at a time.
+ */
 function handleFAQ() {
   const faqItems = document.querySelectorAll(".faq-item");
 
@@ -707,7 +764,8 @@ function handleFAQ() {
     if (!header || !toggle) return;
 
     if (answer) {
-      const answerId = answer.id || `faq-answer-${Math.random().toString(36).slice(2, 8)}`;
+      const answerId =
+        answer.id || `faq-answer-${Math.random().toString(36).slice(2, 8)}`;
       answer.id = answerId;
       toggle.setAttribute("aria-controls", answerId);
 
@@ -721,7 +779,7 @@ function handleFAQ() {
 
     toggle.setAttribute(
       "aria-expanded",
-      item.classList.contains("faq-item-expanded") ? "true" : "false"
+      item.classList.contains("faq-item-expanded") ? "true" : "false",
     );
 
     const handleToggle = () => {
@@ -729,7 +787,10 @@ function handleFAQ() {
 
       // Close all other items
       faqItems.forEach((otherItem) => {
-        if (otherItem !== item && otherItem.classList.contains("faq-item-expanded")) {
+        if (
+          otherItem !== item &&
+          otherItem.classList.contains("faq-item-expanded")
+        ) {
           setExpandedState(otherItem, false);
         }
       });
@@ -762,6 +823,10 @@ function handleFAQ() {
 }
 
 // ================= INIT =================
+/**
+ * Main initialization block. Bootstraps all interactive components
+ * when the DOM has finished loading.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   handleStickyHeader();
   initCarousel();
