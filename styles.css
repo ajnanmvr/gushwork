@@ -145,6 +145,18 @@ h2 {
   pointer-events: auto;
 }
 
+body.has-sticky-strip .header.sticky-visible {
+  transform: translateY(var(--sticky-strip-height, 96px));
+}
+
+@media (max-width: 800px) {
+  body.has-sticky-strip .header.sticky-visible {
+    opacity: 0;
+    transform: translateY(calc(-100% - 12px));
+    pointer-events: none;
+  }
+}
+
 .header.sticky-hidden {
   opacity: 0;
   transform: translateY(calc(-100% - 12px));
@@ -172,7 +184,7 @@ h2 {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 1001;
   padding: 20px var(--padding-x);
   background: #fff;
   border-bottom: 1px solid var(--color-neutral-100);
@@ -184,20 +196,7 @@ h2 {
     transform 0.35s ease;
 }
 
-body.has-sticky-header .sticky-product-bar {
-  top: calc(var(--header-height, 84px) - 1px);
-}
-
-body.has-sticky-header .sticky-product-bar::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 100%;
-  height: var(--header-height, 84px);
-  background: #fff;
-  pointer-events: none;
-}
+/* Removed body.has-sticky-header top positioning for sticky product bar so it positions itself above the navigation bar */
 
 body.has-sticky-strip .sticky-product-bar {
   opacity: 1;

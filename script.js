@@ -63,29 +63,41 @@ function handleStickyHeader() {
       return;
     }
 
-    document.body.classList.add("has-sticky-strip");
+    // Only add has-sticky-strip based on scroll direction
     header.classList.add("sticky-active");
 
     if (justEnteredPastHero) {
-      hideHeaderImmediately();
+      header.classList.add("sticky-no-transition");
+      header.classList.add("sticky-visible");
+      header.classList.remove("sticky-hidden");
+      document.body.classList.add("has-sticky-header");
+      document.body.classList.add("has-sticky-strip");
+      
+      window.requestAnimationFrame(() => {
+        header.classList.remove("sticky-no-transition");
+      });
       directionTravel = 0;
     } else if (Math.abs(scrollDelta) > 1) {
       if (scrollDelta > 0) {
         directionTravel = Math.max(0, directionTravel) + scrollDelta;
 
         if (directionTravel >= hideToggleDistance) {
-          header.classList.add("sticky-hidden");
-          header.classList.remove("sticky-visible");
-          document.body.classList.remove("has-sticky-header");
+          // Scrolling down: show nav + strip
+          header.classList.add("sticky-visible");
+          header.classList.remove("sticky-hidden");
+          document.body.classList.add("has-sticky-header");
+          document.body.classList.add("has-sticky-strip");
           directionTravel = 0;
         }
       } else {
         directionTravel = Math.min(0, directionTravel) + scrollDelta;
 
         if (directionTravel <= -showToggleDistance) {
+          // Scrolling up: show nav only
           header.classList.add("sticky-visible");
           header.classList.remove("sticky-hidden");
           document.body.classList.add("has-sticky-header");
+          document.body.classList.remove("has-sticky-strip");
           directionTravel = 0;
         }
       }
