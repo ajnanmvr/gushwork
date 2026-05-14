@@ -293,6 +293,104 @@ function initCarousel() {
   });
 }
 
+// ================= HERO GALLERY =================
+function initHeroGallery() {
+  const heroImage = document.querySelector(".hero-image");
+  const thumbnailItems = Array.from(
+    document.querySelectorAll(".thumbnail-container .thumbnail")
+  );
+  const prevButton = document.querySelector(
+    ".hero-image-container .slider-controls button:first-child"
+  );
+  const nextButton = document.querySelector(
+    ".hero-image-container .slider-controls button:last-child"
+  );
+
+  if (!heroImage || !thumbnailItems.length || !prevButton || !nextButton) return;
+
+  const imageSources = thumbnailItems
+    .map((thumbnail) => {
+      if (thumbnail instanceof HTMLImageElement) {
+        return thumbnail.getAttribute("src") || thumbnail.currentSrc || thumbnail.src;
+      }
+
+      return thumbnail.getAttribute("data-image");
+    })
+    .filter(Boolean);
+
+  if (!imageSources.length) return;
+
+  const normalizeUrl = (src) => {
+    try {
+      return new URL(src, window.location.href).href;
+    } catch {
+      return src;
+    }
+  };
+
+  const initialIndex = Math.max(
+    0,
+    imageSources.findIndex(
+      (src) => normalizeUrl(src) === normalizeUrl(heroImage.currentSrc || heroImage.src)
+    )
+  );
+
+  let currentIndex = initialIndex;
+
+  const setActiveThumbnail = () => {
+    thumbnailItems.forEach((thumbnail, index) => {
+      const isActive = index === currentIndex;
+      thumbnail.setAttribute("aria-current", isActive ? "true" : "false");
+      if (!(thumbnail instanceof HTMLButtonElement)) {
+        thumbnail.setAttribute("tabindex", "0");
+        thumbnail.setAttribute("role", "button");
+      }
+    });
+  };
+
+  const updateHeroImage = (index) => {
+    currentIndex = (index + imageSources.length) % imageSources.length;
+    heroImage.src = imageSources[currentIndex];
+
+    const activeThumbnail = thumbnailItems[currentIndex];
+    if (activeThumbnail instanceof HTMLImageElement && activeThumbnail.alt.trim()) {
+      heroImage.alt = activeThumbnail.alt;
+    }
+
+    if (activeThumbnail) {
+      activeThumbnail.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+
+    setActiveThumbnail();
+  };
+
+  thumbnailItems.forEach((thumbnail, index) => {
+    thumbnail.addEventListener("click", () => {
+      updateHeroImage(index);
+    });
+
+    thumbnail.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      updateHeroImage(index);
+    });
+  });
+
+  prevButton.addEventListener("click", () => {
+    updateHeroImage(currentIndex - 1);
+  });
+
+  nextButton.addEventListener("click", () => {
+    updateHeroImage(currentIndex + 1);
+  });
+
+  setActiveThumbnail();
+}
+
 // ================= IMAGE ZOOM =================
 function handleImageZoom() {
   const container = document.querySelector(".hero-image-container");
@@ -656,6 +754,7 @@ document.addEventListener("DOMContentLoaded", () => {
   handleStickyHeader();
   initCarousel();
   initTestimonialsCarousel();
+  initHeroGallery();
   handleImageZoom();
   initProcessSteps();
   initDatasheetPopup();
